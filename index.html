@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body style="height:2000px;">
+
+	<style>
+		body {
+			margin:0;
+		}
+
+		.header {
+			position: fixed;
+			width:100%;
+		}
+
+		.header a {
+			text-decoration: none;
+		}
+
+		.header>.box {
+			height:148px;
+			max-width: 1920px;
+			min-width: 1024px;
+			margin:0 auto;
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/logo.png);
+			background-repeat: no-repeat;
+			background-position: 40px 10px
+		}
+
+		.header>.box>.control {
+			height:140px;
+			position: relative;
+		}
+
+		.header>.box>.control>.left {
+			float: left;
+			margin-top: 93px;
+			margin-left: 205px;
+		}
+
+		.header>.box>.control>.left>a {
+			display: block;
+			height: 25px;
+			float:left;
+		}
+
+		.header>.box>.control>.left>.newin {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-new-in.png);
+			width:92px;
+		}
+
+		.header>.box>.control>.left>.newin:hover {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-new-in-hover.png);
+		}
+
+		.header>.box>.control>.left>.beautifulthings {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-beautiful-things.png);
+			width:150px;
+		}
+
+		.header>.box>.control>.left>.beautifulthings:hover {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-beautiful-things-hover.png);
+		}
+
+		.header>.box>.control>.left>.lookbook {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-lookbook.png);
+			width:124px;
+		}
+
+		.header>.box>.control>.left>.lookbook:hover {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-lookbook-hover.png);
+		}		
+
+		.header>.box>.control>.left>.onsale {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-on-sale.png);
+			width:105px;
+		}
+
+		.header>.box>.control>.left>.onsale:hover {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-on-sale-hover.png);
+		}
+
+		.header>.box>.control>.left>.event {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-event.png);
+			width:90px;
+		}
+
+		.header>.box>.control>.left>.event:hover {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-event-hover.png);
+		}		
+
+		.header>.box>.control>.right {
+			margin-right: 45px;
+			margin-top: 50px;
+			position: absolute;
+			right:0;
+		}
+
+		.header>.box>.control>.right>.upnav {
+			position: relative;
+			overflow: hidden;
+			height: 33px;
+		}
+
+		.header>.box>.control>.right>.upnav>.customerservice {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/customer-service.png);
+			width:166px;
+			height: 33px;
+			display: block;
+			position: absolute;
+			right: 6px;
+		}
+
+		.header>.box>.control>.right>.upnav>.customerservice:hover {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/customer-service-hover.png);
+		}
+
+		.header>.box>.control>.right>.nav {
+			margin-top:13px;
+			margin-right: -6px;
+		}
+
+		.header>.box>.control>.right>.nav>a {
+			display: block;
+			height: 27px;
+			float:left;
+		}
+
+		.header>.box>.control>.right>.nav>span {
+			float:left;
+			font-size: 12px;
+		}
+
+		.header>.box>.control>.right>.nav>.member {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-member.png);
+			width:64px;
+		}
+
+		.header>.box>.control>.right>.nav>.member:hover {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-member-hover.png);
+		}
+
+		.header>.box>.control>.right>.nav>.bag {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-bag.png);
+			width:68px;
+		}
+
+		.header>.box>.control>.right>.nav>.bag:hover {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-bag-hover.png);
+		}
+
+		.header>.box>.control>.right>.nav>.wishlist {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-wish-list.png);
+			width:88px;
+		}
+
+		.header>.box>.control>.right>.nav>.wishlist:hover {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-wish-list-hover.png);
+		}
+
+		.header>.box>.control>.right>.nav>.search {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-search.png);
+			width:74px;
+		}
+
+		.header>.box>.control>.right>.nav>.search:hover {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-search-hover.png);
+		}
+
+		.header>.box>.shadow {
+			height: 8px;
+			width:100%;
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/shadow.png);
+		}
+
+	</style>
+
+
+
+	<div class="header">
+		<div class="box">
+			<div class="control">
+				<div class="left">
+					<a href="#newin" class="newin">&nbsp;</a>
+					<a href="#beautifulthings" class="beautifulthings">&nbsp;</a>
+					<a href="#lookbook" class="lookbook">&nbsp;</a>
+					<a href="#onsale" class="onsale">&nbsp;</a>
+					<a href="#event" class="event">&nbsp;</a>
+				</div>
+				<div class="right">
+					<div class="upnav">
+						<a href="#customerservice" class="customerservice">&nbsp;</a>
+					</div>
+					<div class="nav">
+						<a href="#member" class="member">&nbsp;</a>
+						<span>|</span>
+						<a href="#bag" class="bag">&nbsp;</a>
+						<span>|</span>
+						<a href="#wishlist" class="wishlist">&nbsp;</a>
+						<span>|</span>
+						<a href="#search" class="search">&nbsp;</a>
+					</div>
+				</div>
+			</div>
+			<div class="shadow">&nbsp;</div>
+		</div>
+	</div>
+
+
+
+
+
+
+	<div style="width:1"></div>
+	
+</body>
+</html>
