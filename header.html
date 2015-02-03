@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 </head>
 <body style="height:2000px;">
 
@@ -176,9 +177,62 @@
 			background-image: url(http://photo.lamo3.com.tw/eshop/common/shadow.png);
 		}
 
+
+		.header>.searchbox {
+			height:0;
+			background-color: #f0edec;
+			opacity: 0.9;
+			max-width: 1920px;
+			min-width: 1024px;
+			margin:0 auto;
+			margin-top:-8px;
+			position: relative;
+			z-index: -1;
+			display: none;
+		}
+
+		.header>.searchbox>div>.close {
+			width:51px;
+			height: 47px;
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/close-button.png);
+			cursor: pointer;
+			position: absolute;
+			right: 50px;
+			top: 26px;
+		}
+
+		.header>.searchbox>div>.text {
+			font-size: 40px;
+			font-family: arial;
+			position: absolute;
+			top:39px;
+			left:206px;
+		}
+
+		.header>.searchbox>div>.searchform>input {
+			margin-top: 103px;
+			margin-left: 207px;
+			border: 0px;
+			outline: none;
+			border-bottom: 1px solid;
+			width: 1505px;
+			height: 50px;
+			background-color: transparent;
+			font-size: 40px;
+		}
+
 	</style>
 
-
+	<script>
+	$(function() {
+		$(".header>.box>.control>.right>.nav>.search").click(function() {
+			$(".header>.searchbox").animate({show:"show",height:220});
+		});
+		$(".header>.searchbox>div>.close").click(function() {
+			$(".header>.searchbox").animate({hide:"hide",height:0});
+		});
+	});
+	</script>
 
 	<div class="header">
 		<div class="box">
@@ -206,6 +260,16 @@
 				</div>
 			</div>
 			<div class="shadow">&nbsp;</div>
+		</div>
+
+		<div class="searchbox">
+			<div>
+				<div class="close">&nbsp;</div>
+				<span class="text">SEARCH:</span>
+				<form action="../Shop/itemlist.aspx" method="get" class="searchform">
+        			<input type="text" name="ctl00$edtSearch">
+    			</form>
+			</div>
 		</div>
 	</div>
 
