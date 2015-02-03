@@ -146,7 +146,11 @@
 
 		.header>.box>.control>.right>.nav>.bag {
 			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-bag.png);
-			width:68px;
+			padding-left:43px;
+			width:25px;
+			font-size: 12px;
+			font-family: arial;
+			color: black;
 		}
 
 		.header>.box>.control>.right>.nav>.bag:hover {
@@ -171,12 +175,75 @@
 			background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-search-hover.png);
 		}
 
+		.header>.box>.control>.right>.bagbox {
+			position: absolute;
+			width: 285px;
+			height: 200px;
+			z-index: -1;
+			background-color: white;
+			top: 90px;
+			right: 0;
+			display: none;
+			box-shadow: 5px 5px 5px gray;
+		}
+
+		.header>.box>.control>.right>.bagbox>div>.bagicon {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/bag-icon.png);
+			background-repeat: no-repeat;
+			width: 245px;
+			height: 146px;
+			margin: 10px auto;
+			text-align: center;
+			line-height: 30px;
+			font-size: 16px;
+			font-family: arial;
+			background-position: 80px 0;
+			padding-left: 20px;
+		}
+
+		.header>.box>.control>.right>.bagbox>div>.list {
+			width: 263px;
+			height: 144px;
+			margin: 10px auto;
+			border: 1px solid;
+			font-size: 12px;
+		}
+
+		.header>.box>.control>.right>.bagbox>div>.list>table>thead>tr {
+			height:23px;
+			background-color: #c0c0c0;
+		}
+
+		.header>.box>.control>.right>.bagbox>div>.list>table td {
+			border-right: 1px dotted;
+		}
+
+		.header>.box>.control>.right>.bagbox>div>.list>table>thead td {
+			border-right-color: white;
+		}
+
+		.header>.box>.control>.right>.bagbox>div>.list>table td.end {
+			border-right: 0;
+		}
+
+		.header>.box>.control>.right>.bagbox>div>.list>table>tbody td {
+			padding-left: 5px;
+		}
+
+		.header>.box>.control>.right>.bagbox>div>.checkout {
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/checkout-button.png);	
+			width:129px;
+			height:24px;
+			display: block;
+			margin: 0 auto;
+			cursor: pointer;
+		}
+
 		.header>.box>.shadow {
 			height: 8px;
 			width:100%;
 			background-image: url(http://photo.lamo3.com.tw/eshop/common/shadow.png);
 		}
-
 
 		.header>.searchbox {
 			height:0;
@@ -221,6 +288,8 @@
 			font-size: 40px;
 		}
 
+
+
 	</style>
 
 	<script>
@@ -231,6 +300,38 @@
 		$(".header>.searchbox>div>.close").click(function() {
 			$(".header>.searchbox").animate({hide:"hide",height:0});
 		});
+
+		function openBagBox() {
+			$(".header>.box>.control>.right>.bagbox").show().find(".bagicon").show().end().find(".list").hide();
+		}
+
+		function closeBagBox() {
+			$(".header>.box>.control>.right>.bagbox").hide().find(".bagicon").hide().end().find(".list").show();
+		}
+
+		$(".header>.box>.control>.right>.nav>.bag,.header>.box>.control>.right>.bagbox").on({
+			mouseenter: function() {
+				var $bagbox = $(".header>.box>.control>.right>.bagbox");
+				if ($bagbox.data("sid") !== undefined && $bagbox.data("sid") !== null) {
+					clearTimeout($bagbox.data("sid"));
+					$bagbox.data("sid", null);
+				}
+				openBagBox();
+			},
+			mouseleave: function() {
+				var $bagbox = $(".header>.box>.control>.right>.bagbox");
+				$bagbox.data("sid", setTimeout(function() {
+					closeBagBox();
+				}, 500));
+			}
+		});
+
+		$(".header>.box>.control>.right>.bagbox>div>.bagicon").on("mouseenter mousemove",function() {
+			$(this).hide().next().show();
+		});
+
+
+
 	});
 	</script>
 
@@ -251,12 +352,42 @@
 					<div class="nav">
 						<a href="#member" class="member">&nbsp;</a>
 						<span>|</span>
-						<a href="#bag" class="bag">&nbsp;</a>
+						<a href="#bag" class="bag">(<span class="count">0</span>)</a>
 						<span>|</span>
 						<a href="#wishlist" class="wishlist">&nbsp;</a>
 						<span>|</span>
 						<a href="#search" class="search">&nbsp;</a>
 					</div>
+					<div class="bagbox">
+						<div>
+							<div class="bagicon">
+								BAG(<span class="count">0</span>)								
+							</div>
+							<div class="list">
+								<table cellspacing="0" cellpadding="0" width="100%">
+									<thead>
+										<tr>
+											<td width="101" align="center">品名</td>
+											<td align="center">顏色</td>
+											<td align="center">尺寸</td>
+											<td align="center">金額</td>
+											<td align="center" class="end">數量</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>品名</td>
+											<td>顏色</td>
+											<td>尺寸</td>
+											<td>金額</td>
+											<td class="end">數量</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<a href="../Shop/cartList.aspx" class="checkout">&nbsp;</a>
+						</div>
+					</div>					
 				</div>
 			</div>
 			<div class="shadow">&nbsp;</div>
@@ -271,6 +402,10 @@
     			</form>
 			</div>
 		</div>
+
+
+
+
 	</div>
 
 
