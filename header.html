@@ -7,6 +7,10 @@
 </head>
 <body style="height:2000px;">
 
+
+
+
+
 	<style>
 		body {
 			margin:0;
@@ -207,6 +211,7 @@
 			margin: 10px auto;
 			border: 1px solid;
 			font-size: 12px;
+			overflow: hidden;
 		}
 
 		.header>.box>.control>.right>.bagbox>div>.list>table>thead>tr {
@@ -228,6 +233,10 @@
 
 		.header>.box>.control>.right>.bagbox>div>.list>table>tbody td {
 			padding-left: 5px;
+		}
+
+		.header>.box>.control>.right>.bagbox>div>.list>table>tfoot>tr {
+			height:200px;
 		}
 
 		.header>.box>.control>.right>.bagbox>div>.checkout {
@@ -288,52 +297,112 @@
 			font-size: 40px;
 		}
 
+		.header>.customerservicebox {
+			position: fixed;
+			width: 100%;
+			height: 0;
+			bottom: 0;
+			display: none;			
+		}
 
+		.header>.customerservicebox>div {
+			width: 100%;
+			max-width: 1920px;
+			min-width: 1024px;
+			background-color: #f0edec;
+			opacity: 0.9;
+			height: 430px;
+			margin: 0 auto;
+			position: relative;
+		}
+
+		.header>.customerservicebox>div>.close {
+			width:51px;
+			height: 47px;
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/close-button.png);
+			cursor: pointer;
+			position: absolute;
+			right: 50px;
+			top: 26px;
+		}
+
+		.header>.customerservicebox>div>.outbox {
+			overflow: hidden;
+			margin: 0 auto;
+			width: 1380px;
+			padding: 65px 0;
+		}
+
+		.header>.customerservicebox>div>.outbox>div {
+			width:298px;
+			height:298px;
+			border:1px solid;
+			float: left;
+			background-color: white;
+			margin-right: 60px;
+		}
+
+		.header>.customerservicebox>div>.outbox>.end {
+			margin-right: 0;
+		}
 
 	</style>
 
+
+
+
+
 	<script>
 	$(function() {
-		$(".header>.box>.control>.right>.nav>.search").click(function() {
-			$(".header>.searchbox").animate({show:"show",height:220});
-		});
-		$(".header>.searchbox>div>.close").click(function() {
-			$(".header>.searchbox").animate({hide:"hide",height:0});
-		});
-
-		function openBagBox() {
-			$(".header>.box>.control>.right>.bagbox").show().find(".bagicon").show().end().find(".list").hide();
-		}
-
-		function closeBagBox() {
-			$(".header>.box>.control>.right>.bagbox").hide().find(".bagicon").hide().end().find(".list").show();
-		}
-
-		$(".header>.box>.control>.right>.nav>.bag,.header>.box>.control>.right>.bagbox").on({
-			mouseenter: function() {
-				var $bagbox = $(".header>.box>.control>.right>.bagbox");
-				if ($bagbox.data("sid") !== undefined && $bagbox.data("sid") !== null) {
-					clearTimeout($bagbox.data("sid"));
-					$bagbox.data("sid", null);
-				}
-				openBagBox();
-			},
-			mouseleave: function() {
-				var $bagbox = $(".header>.box>.control>.right>.bagbox");
-				$bagbox.data("sid", setTimeout(function() {
-					closeBagBox();
-				}, 500));
+		(function() {
+			$(".header>.box>.control>.right>.nav>.search").click(function() {
+				$(".header>.searchbox").animate({show:"show",height:220});
+			});
+			$(".header>.searchbox>div>.close").click(function() {
+				$(".header>.searchbox").animate({hide:"hide",height:0});
+			});
+		})(); //search
+		(function() {
+			function openBagBox() {
+				$(".header>.box>.control>.right>.bagbox").show().find(".bagicon").show().end().find(".list").hide();
 			}
-		});
-
-		$(".header>.box>.control>.right>.bagbox>div>.bagicon").on("mouseenter mousemove",function() {
-			$(this).hide().next().show();
-		});
-
-
-
+			function closeBagBox() {
+				$(".header>.box>.control>.right>.bagbox").hide().find(".bagicon").hide().end().find(".list").show();
+			}
+			$(".header>.box>.control>.right>.nav>.bag,.header>.box>.control>.right>.bagbox").on({
+				mouseenter: function() {
+					var $bagbox = $(".header>.box>.control>.right>.bagbox");
+					if ($bagbox.data("sid") !== undefined && $bagbox.data("sid") !== null) {
+						clearTimeout($bagbox.data("sid"));
+						$bagbox.data("sid", null);
+					}
+					openBagBox();
+				},
+				mouseleave: function() {
+					var $bagbox = $(".header>.box>.control>.right>.bagbox");
+					$bagbox.data("sid", setTimeout(function() {
+						closeBagBox();
+					}, 500));
+				}
+			});
+			$(".header>.box>.control>.right>.bagbox>div>.bagicon").on("mouseenter mousemove",function() {
+				$(this).hide().next().show();
+			});
+		})(); //bag
+		(function() {
+			$(".header>.box>.control>.right>.upnav>.customerservice").click(function() {
+				$(".header>.customerservicebox").animate({show:"show",height:430});
+			});
+			$(".header>.customerservicebox>div>.close").click(function() {
+				$(".header>.customerservicebox").animate({hide:"hide",height:0});
+			});
+		})(); //customerservice
 	});
 	</script>
+
+
+
+
 
 	<div class="header">
 		<div class="box">
@@ -383,6 +452,15 @@
 											<td class="end">數量</td>
 										</tr>
 									</tbody>
+									<tfoot>
+										<tr>
+											<td>&nbsp;</td>
+											<td>&nbsp;</td>
+											<td>&nbsp;</td>
+											<td>&nbsp;</td>
+											<td class="end">&nbsp;</td>
+										</tr>									
+									</tfoot>
 								</table>
 							</div>
 							<a href="../Shop/cartList.aspx" class="checkout">&nbsp;</a>
@@ -392,7 +470,6 @@
 			</div>
 			<div class="shadow">&nbsp;</div>
 		</div>
-
 		<div class="searchbox">
 			<div>
 				<div class="close">&nbsp;</div>
@@ -402,18 +479,23 @@
     			</form>
 			</div>
 		</div>
-
-
-
-
+		<div class="customerservicebox">
+			<div>
+				<div class="close">&nbsp;</div>
+				<div class="outbox">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div class="end"></div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 
 
 
 
-
 	<div style="width:1"></div>
-	
 </body>
 </html>
