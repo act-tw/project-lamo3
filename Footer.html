@@ -8,18 +8,6 @@
  </head>
  <body>
   <div id="footer">
-    <div class="mailBox">
-      <h4>訂閱電子報</h4>
-      <form>
-          <table>
-              <tr>
-                  <th><span>請填寫e-mail</span></th>
-                  <td><input type="text"></input></td>
-                  <td class="subscribe"><input type="button"></input></td>
-              </tr>
-          </table>
-      </form>
-    </div>
     <ol>
         <li><a href="javascript:;">ABOUT LAMO.3<i>關 於 LAMO.3</i></a></li>
         <li><a href="javascript:;">SHOPPING Q&A<i>購 物 Q&A</i></a></li>
@@ -35,14 +23,24 @@
         <li class="copyright">COPYRIGHT@2015 LAMO.3 ALL RIGHTS RESRVED.</li>
     </ul>
   </div>
+  <div id="mailBox">
+    <h4>訂閱電子報</h4>
+    <form>
+        <table>
+            <tr>
+                <td><input type="text" placeholder="請填寫e-mail"></input></td>
+                <td class="subscribe"><input type="button"></input></td>
+            </tr>
+        </table>
+    </form>
+  </div>
 <script>
     $("#footer>ol>li.subscribeBn").click(function(){
-        $("#footer>.mailBox").animate({height:"220px"}),
-        $("html,body").animate({scrollTop:99999})
-    });
-
-    $("#footer").mouseleave(function(){
-        $("#footer>.mailBox").animate({height:"0"})
+        $("#mailBox").animate({
+            bottom:40
+        }).mouseleave(function(){
+            $(this).animate({bottom:-260})
+        });
     });
 </script>
  </body>
