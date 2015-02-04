@@ -346,6 +346,33 @@
 			margin-right: 0;
 		}
 
+		.header>.eventbox {
+			width: 223px;
+			height: 685px;
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/promo-bg.png);
+			position: fixed;
+			top: 50%;
+			margin-top: -343px;
+			right: -190px;
+		}
+
+		.header>.eventbox>div>.eventbutton {
+			width:62px;
+			height:172px;
+			background-image: url(http://photo.lamo3.com.tw/eshop/common/promo-button.png);
+			margin-left: -23px;
+			margin-top: 257px;
+			cursor:pointer;
+		}
+
+		.header>.eventbox>div>.eventcontent {
+			width:160px;
+			height:590px;
+			background-color: pink;
+			margin-top: -378px;
+			margin-left: 49px;
+		}
+
 	</style>
 
 
@@ -397,6 +424,16 @@
 				$(".header>.customerservicebox").animate({hide:"hide",height:0});
 			});
 		})(); //customerservice
+		(function() {
+			$(".header>.eventbox>div>.eventbutton").click(function() {
+				var right = parseInt($(".header>.eventbox").css("right"));
+				if (right === -190) {
+					$(".header>.eventbox").animate({"right":0});
+				} else {
+					$(".header>.eventbox").animate({"right":-190});
+				}
+			});
+		})(); //event
 	});
 	</script>
 
@@ -483,15 +520,23 @@
 			<div>
 				<div class="close">&nbsp;</div>
 				<div class="outbox">
-					<div></div>
-					<div></div>
-					<div></div>
-					<div class="end"></div>
+					<div>&nbsp;</div>
+					<div>&nbsp;</div>
+					<div>&nbsp;</div>
+					<div class="end">&nbsp;</div>
 				</div>
 			</div>
 		</div>
+		<div class="eventbox">
+			<div>
+				<div class="eventbutton">&nbsp;</div>
+				<div class="eventcontent">
+					
+				</div>
+			</div>
+		</div>		
 	</div>
-
+	
 
 
 
