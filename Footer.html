@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+ <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js" type="text/javascript"></script>
+  <link href="Footer.css" rel="stylesheet" type="text/css" />
+ </head>
+ <body>
+  <div id="footer">
+    <div class="mailBox">
+      <h4>訂閱電子報</h4>
+      <form>
+          <table>
+              <tr>
+                  <th><span>請填寫e-mail</span></th>
+                  <td><input type="text"></input></td>
+                  <td class="subscribe"><input type="button"></input></td>
+              </tr>
+          </table>
+      </form>
+    </div>
+    <ol>
+        <li><a href="javascript:;">ABOUT LAMO.3<i>關 於 LAMO.3</i></a></li>
+        <li><a href="javascript:;">SHOPPING Q&A<i>購 物 Q&A</i></a></li>
+        <li><a href="javascript:;">NEWS<i>新 聞</i></a></li>
+        <li class="subscribeBn"><a href="javascript:;">SUBSCRIBE<i>訂 閱</i></a></li>
+    </ol>
+    <ul>
+        <li class="line"><a href="javascript:;">line</a></li>
+        <li class="pinterest"><a href="javascript:;">pinterest</a></li>
+        <li class="instagram"><a href="javascript:;">instagram</a></li>
+        <li class="fb"><a href="javascript:;">fb</a></li>
+        <li class="youtube"><a href="javascript:;">youtube</a></li>
+        <li class="copyright">COPYRIGHT@2015 LAMO.3 ALL RIGHTS RESRVED.</li>
+    </ul>
+  </div>
+<script>
+    $("#footer>ol>li.subscribeBn").click(function(){
+        $("#footer>.mailBox").animate({height:"220px"}),
+        $("html,body").animate({scrollTop:99999})
+    });
+
+    $("#footer").mouseleave(function(){
+        $("#footer>.mailBox").animate({height:"0"})
+    });
+</script>
+ </body>

@@ -1,0 +1,163 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    width: 100%;
+    max-width: 1920px;
+    min-width:1024px;
+    padding-top: 2662px;
+    background: url(index.jpg) red 50% 0 no-repeat;
+    margin: 0 auto;
+}
+
+#footer {
+    overflow: hidden;
+    width: 100%;
+    min-height: 40px;
+    max-width: 1920px;
+    min-width:1024px;
+    color: #fefefe;
+    font: 400 12px/1 "微軟正黑體";
+    line-height: 40px;
+    background-color: #5DADAE;
+}
+
+#footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+
+#footer>.mailBox {
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    background-color: #f0edec;
+}
+
+#footer>.mailBox>h4 {
+    width: 194px;
+    height: 33px;
+    text-indent: -9999px;
+    background: url(http://photo.lamo3.com.tw/eshop/common/subscribe-text.png) no-repeat;
+    margin: 55px 0 35px 10.65%;
+}
+
+#footer>.mailBox table {
+    width: 78.8%;
+    height: 45px;
+    border-bottom: 1px solid #67615F;
+    border-spacing: 0;
+    margin: 0 auto;
+}
+
+#footer>.mailBox table tr>th {
+    width: 205px;
+}
+
+#footer>.mailBox table tr>th>span {
+    display: block;
+    width: 201px;
+    height: 29px;
+    text-indent: -9999px;
+    background: url(http://photo.lamo3.com.tw/eshop/common/subscribe-placeholder.png) no-repeat;
+}
+
+#footer>.mailBox table tr>td.subscribe {
+    width:40px;
+}
+
+#footer>.mailBox table tr>td>input[type="text"] {
+    width: 98%;
+    line-height: 30px;
+    background-color: transparent;
+    border: 0 none;
+}
+
+#footer>.mailBox table tr>td.subscribe>input {
+    width: 39px;
+    height: 29px;
+    text-indent: -9999px;
+    cursor: pointer;
+    background: url(http://photo.lamo3.com.tw/eshop/common/subscribe-icon.png) no-repeat;
+    border: 0 none;
+}
+
+#footer>ol {
+    float: left;
+    margin-left: 30px;
+}
+
+#footer>ol>li {
+    position: relative;
+    display: inline-block;
+}
+
+#footer>ol>li>a {
+    padding:0 20px;
+    border-right: 1px solid #efefef;
+}
+
+#footer>ol>li>a>i {
+    position: absolute;
+    left: 20px;
+    font-style: normal;
+}
+
+#footer>ol>li:hover>a,#footer>ol>li>a>i {
+    color: transparent;
+}
+
+#footer>ol>li:hover>a>i {
+    color: #fefefe!important;
+}
+
+#footer>ol>li.subscribeBn>a {
+    border: 0 none;
+}
+
+#footer>ul {
+    float: right;
+    display: inline-block;
+    margin-right: 57px;
+}
+
+#footer>ul>li {
+    float: right;
+    display: inline-block;
+}
+
+#footer>ul>li>a {
+    display: block;
+    width: 32px;
+    height: 32px;
+    text-indent: -9999px;
+    background-repeat: no-repeat;
+    margin: 4px 0 0 12px;
+}
+
+#footer>ul>li.line>a {
+    background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-social-line.png);
+}
+
+#footer>ul>li.pinterest>a {
+    background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-social-pinterest.png);
+}
+
+#footer>ul>li.instagram>a {
+    background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-social-instagram.png);
+}
+
+#footer>ul>li.fb>a {
+    background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-social-facebook.png);
+}
+
+#footer>ul>li.youtube>a {
+    background-image: url(http://photo.lamo3.com.tw/eshop/common/nav-social-youtube.png);
+}
+
+#footer>ul>li.copyright {
+    margin-right: 12px;
+}
