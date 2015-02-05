@@ -4,7 +4,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js" type="text/javascript"></script>
-  <link href="Footer.css" rel="stylesheet" type="text/css" />
+  <link href="static/css/footer.css" rel="stylesheet" type="text/css" />
  </head>
  <body>
   <div id="footer">
@@ -37,13 +37,5 @@
         </table>
     </form>
   </div>
-<script>
-    $("#footer>ol>li.subscribeBn").click(function(){
-        $("#mailBox").stop().animate({
-            bottom:0
-        }).mouseleave(function(){
-            $(this).animate({bottom:-260})
-        });
-    });
-</script>
+<script type="text/javascript" async="" src="static/js/footer.js"></script>
  </body>
