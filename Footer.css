@@ -7,8 +7,8 @@ body {
     width: 100%;
     max-width: 1920px;
     min-width:1024px;
-    padding-top: 2662px;
-    background: url(index.jpg) red 50% 0 no-repeat;
+    padding-top: 1032px;
+    background: url(index.jpg) 50% 0 no-repeat;
     margin: 0 auto;
 }
 
@@ -33,11 +33,16 @@ body {
 
 #mailBox {
     position: fixed;
+    width: 100%;
+    max-width: 1920px;
+    min-width:1024px;
     z-index: 8;
     bottom: -220px;
     width: 100%;
-    height: 220px;
-    background-color: #f0edec;
+    height: 260px;
+    background-color: #f0edec\0;
+    background-color: rgba(240,237,236,.9);
+    margin: 0 auto;
 }
 
 #mailBox>h4 {
@@ -45,37 +50,71 @@ body {
     height: 33px;
     text-indent: -9999px;
     background: url(http://photo.lamo3.com.tw/eshop/common/subscribe-text.png) no-repeat;
-    margin: 55px 0 35px 10.65%;
+    margin: 49px 0 32px 10.8%;
 }
 
 #mailBox table {
-    width: 78.8%;
+    width: 80%;
     height: 45px;
     border-bottom: 1px solid #67615F;
     border-spacing: 0;
     margin: 0 auto;
 }
 
+#mailBox table tr td {
+    position: relative;
+}
+
 #mailBox table tr>td.subscribe {
-    width:40px;
+    width: 53px;
 }
 
 #mailBox table tr>td>input[type="text"] {
     width: 98%;
-    color: #4F4D4E;
     line-height: 30px;
+    color: #494846;
     font: 400 35px/1 "微軟正黑體";
     background-color: transparent;
     border: 0 none;
+    outline: none;
+}
+
+::-webkit-input-placeholder {
+    color: #494846;
+}
+
+:-moz-placeholder {
+    color: #494846;
+}
+
+::-moz-placeholder {
+    color: #494846;
+}
+
+:-ms-input-placeholder {
+    color: #494846;
 }
 
 #mailBox table tr>td.subscribe>input {
     width: 39px;
     height: 29px;
+    color: #494846;
     text-indent: -9999px;
     cursor: pointer;
     background: url(http://photo.lamo3.com.tw/eshop/common/subscribe-icon.png) no-repeat;
     border: 0 none;
+    margin-top: -3px;
+}
+
+#mailBox .alertBox{
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #FF2500;
+    font: 400 18px/45px "微軟正黑體";
+    letter-spacing: 1px;
+    background-color: #f0edec;
+    margin-right: 20px;
 }
 
 #footer>ol {
@@ -89,7 +128,7 @@ body {
 }
 
 #footer>ol>li>a {
-    padding:0 20px;
+    padding: 0 20px;
     border-right: 1px solid #efefef;
 }
 
