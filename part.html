@@ -34,16 +34,73 @@
 	}
 
 	.navibar {
-		background-image: url(http://photo.lamo3.com.tw/eshop/common/crumbs-home.png);
-		background-repeat: no-repeat;
-		height: 13px;
-		padding-left: 20px;
-		font-size: 12px;
 		margin-bottom: 16px;
+		font-size:12px;
+		font-family: arial;
+	}
+
+	.navibar>.home {
+		background-image: url(http://photo.lamo3.com.tw/eshop/common/crumbs-home.png);
+		width: 17px;
+		height: 13px;
+		display: inline-block;
+		cursor: pointer;
+	}
+
+	.navibar>.flag {
+		background-image: url(http://photo.lamo3.com.tw/eshop/common/crumbs-caret-right.png);
+		width:7px;
+		height: 10px;
+		display: inline-block;
 	}
 
 	.sortbar {
 		padding-bottom: 18px;
+		font-size:12px;
+		font-family: arial;
+	}
+
+	.sortbar>.flag {
+		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sidebar-buttons-open.png);
+		width: 85px;
+		height: 20px;
+		display: block;
+		background-repeat: no-repeat;
+		background-position: 78px 3px;
+		cursor: pointer;
+		font-size: 14px;
+		font-family: arial;
+		border-bottom: 1px solid #999999;
+		padding: 0 5px;
+	}
+
+	.sortbar>.sortbox {
+		position: absolute;
+		z-index: 1;
+		width:290px;
+		background-image: url(static/images/demo/temp.png);
+		background-color:#efeeec;
+	}
+
+	.sortbar>.sortbox>div {
+		display: inline-block;
+		margin:0 auto;
+	}
+
+	.sortbar>.sortbox>div>.group {
+		padding-top:45px;
+		font-size:13px;
+		font-family: arial,微軟正黑體;
+
+	}
+
+	.sortbar>.sortbox>div>.group>div {
+		padding:6px 22px;
+	}
+
+	.sortbar>.sortbox>div>.group.price>.selected {
+		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sort-by-price-selected.png);
+
 	}
 	</style>
 
@@ -84,11 +141,31 @@
 	
 
 	<div class="navibar">
-		dfjsdfije
+		<span class="home">&nbsp;</span>
+		測試位置
+		<span class="flag">&nbsp;</span>
+		測試位置
+		<span class="flag">&nbsp;</span>
+		測試位置
 	</div>
 
 	<div class="sortbar">
-		sort by
+		<div class="flag">sort by</div>
+		<div class="sortbox">
+			<div>
+				<div class="group price">
+					<div>價格</div>
+					<div class="selected">價格由高至低</div>
+					<div>價格由低至高</div>
+				</div>
+				<div class="group">
+					<div>價格</div>
+					<div>價格由高至低</div>
+					<div>價格由低至高</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 
 	<div class="waterfall">
