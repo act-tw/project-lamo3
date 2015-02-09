@@ -32,199 +32,225 @@
 
 
 	<style>
-	.waterfall {
-		max-width: 1232px;
-		min-width: 924px;
-		overflow: hidden;
-		position: relative;
-	}
+	    #container
+	    {
+	        width: 100%;
+	        max-width: 1920px;
+	        min-width: 1024px;
+	    }
 
-	.waterfall>div {
-		width: 280px;
-		border: 1px solid #a0a0a0;
-		border-radius: 6px;
-		float:left;
-		margin-right:18px;
-		margin-bottom:20px;
-		background-color: white;
-		padding:4px;
-	}
+        #tbItemList {
+            width: 100%;
+        }
 
-	.waterfall>div>a>img {
-		display: block;
-	}
+        #ctl00_ContentPlaceHolder1_tdLeft {
+            width: 318px;
+            padding: 0;
+        }
 
-	.navibar {
-		margin-bottom: 16px;
-		font-size:12px;
-		font-family: arial;
-	}
+        #ctl00_ContentPlaceHolder1_ilItems {
+            text-align: left;
+            position: relative;
+        }
+        
 
-	.navibar>a>.home {
-		background-image: url(http://photo.lamo3.com.tw/eshop/common/crumbs-home.png);
-		width: 17px;
-		height: 13px;
-		display: inline-block;
-		cursor: pointer;
-	}
+	     .waterfall {
+	         max-width: 1232px;
+	         min-width: 924px;
+	         overflow: hidden;
+	         position: relative;
+	     }
 
-	.navibar>.flag {
-		background-image: url(http://photo.lamo3.com.tw/eshop/common/crumbs-caret-right.png);
-		width:7px;
-		height: 10px;
-		display: inline-block;
-	}
+	    .waterfall>div {
+	        width: 280px;
+	        border: 1px solid #a0a0a0;
+	        border-radius: 6px;
+	        float:left;
+	        margin-right:18px;
+	        margin-bottom:20px;
+	        background-color: white;
+	        padding:4px;
+	    }
 
-	.navibar>a {
-		color:black;
-		text-decoration: none;
-	}
+	    .waterfall>div>a>img {
+	        display: block;
+	    }
 
-	.sortbar {
-		padding-bottom: 18px;
-		font-size:12px;
-		font-family: arial;
-	}
+	    .navibar {
+	        margin-bottom: 16px;
+	        font-size:12px;
+	        font-family: arial;
+	        text-align: left;
+            margin-top: 22px;
+	    }
 
-	.sortbar>.flag {
-		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sidebar-buttons-open.png);
-		width: 85px;
-		height: 20px;
-		display: block;
-		background-repeat: no-repeat;
-		background-position: 78px 3px;
-		cursor: pointer;
-		font-size: 14px;
-		font-family: arial;
-		border-bottom: 1px solid #999999;
-		padding: 0 5px;
-		float: left;
-	}
+	    .navibar>a>.home {
+	        background-image: url(http://photo.lamo3.com.tw/eshop/common/crumbs-home.png);
+	        width: 17px;
+	        height: 13px;
+	        display: inline-block;
+	        cursor: pointer;
+	    }
 
-	.sortbar>div.close {
-		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sidebar-buttons-close.png);
-	}
+	    .navibar>.flag {
+	        background-image: url(http://photo.lamo3.com.tw/eshop/common/crumbs-caret-right.png);
+	        width:7px;
+	        height: 10px;
+	        display: inline-block;
+	    }
 
-	.sortbar>.sortbox {
-		position: absolute;
-		z-index: 1;
-		width:290px;
-		background-position: left bottom;
-		background-color:#efeeec;
-		display: none;
-		margin-top: 21px;
-	}
+	    .navibar>a {
+	        color:black;
+	        text-decoration: none;
+	    }
 
-	.sortbar>.sortbox>div {
-		display: inline-block;
-		margin:0 95px 38px auto;
-	}
+	    .sortbar {
+	        padding-bottom: 18px;
+	        font-size:12px;
+	        font-family: arial;
+	    }
 
-	.sortbar>.sortbox>div>.group {
-		padding-top:38px;
-		font-size:13px;
-		font-family: arial,微軟正黑體;
-		margin-left:74px;
-	}
+	    .sortbar>.flag {
+	        background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sidebar-buttons-open.png);
+	        width: 85px;
+	        height: 20px;
+	        display: block;
+	        background-repeat: no-repeat;
+	        background-position: 78px 3px;
+	        cursor: pointer;
+	        font-size: 14px;
+	        font-family: arial;
+	        border-bottom: 1px solid #999999;
+	        padding: 0 5px;
+	        float: left;
+	        text-align: left;
+	    }
 
-	.sortbar>.sortbox>div>.group>div {
-		background-repeat: no-repeat;
-		cursor: pointer;
-	}
+	    .sortbar>div.close {
+	        background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sidebar-buttons-close.png);
+	    }
 
-	.sortbar>.sortbox>div>.group.price>div {
-		padding:6px 18px;
-	}
+	    .sortbar>.sortbox {
+	        position: absolute;
+	        z-index: 1;
+	        width:290px;
+	        background-position: left bottom;
+	        background-color:#efeeec;
+	        display: none;
+	        margin-top: 21px;
+	    }
 
-	.sortbar>.sortbox>div>.group.size>div {
-		padding:11px 18px;
-	}
+	    .sortbar>.sortbox>div {
+	        display: inline-block;
+	        margin:0 95px 38px auto;
+	    }
 
-	.sortbar>.sortbox>div>div.price>.no,.sortbar>.sortbox>div>div.size>.no {
-		font-weight: bold;
-		cursor: default ;
-	}
+	    .sortbar>.sortbox>div>.group {
+	        padding-top:38px;
+	        font-size:13px;
+	        font-family: arial,微軟正黑體;
+	        margin-left:74px;
+	    }
 
-	.sortbar>.sortbox>div>.group.price>.selected {
-		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sort-by-price-selected.png);
-	}
+	    .sortbar>.sortbox>div>.group>div {
+	        background-repeat: no-repeat;
+	        cursor: pointer;
+	    }
 
-	.sortbar>.sortbox>div>.group.size>.selected {
-		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sort-by-size-selected.png);
-	}
+	    .sortbar>.sortbox>div>.group.price>div {
+	        padding:6px 18px;
+	    }
 
-	.sortbar>.sortbox>.control {
-		margin: 0 22px 16px 0;
-		font-size: 12px;
-		font-family: 微軟正黑體;
-		float: right;
-	}
+	    .sortbar>.sortbox>div>.group.size>div {
+	        padding:11px 18px;
+	    }
 
-	.sortbar>.sortbox>.control>span {
-		cursor: pointer;
-	}
+	    .sortbar>.sortbox>div>div.price>.no,.sortbar>.sortbox>div>div.size>.no {
+	        font-weight: bold;
+	        cursor: default ;
+	    }
 
-	.sortbar>.sortbox>.control>.spline {
-		margin: 0 6px;
-		cursor: default;
-	}
+	    .sortbar>.sortbox>div>.group.price>.selected {
+	        background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sort-by-price-selected.png);
+	    }
 
-	.sortbar>.item, .sortbar>.look {
-		float: right;
-		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sidebar-buttons-open.png);
-		background-repeat: no-repeat;
-		background-position: right 1px;
-		width:40px;
-		margin-left: 10px;
-		margin-top:2px;
-		cursor: pointer;
-		display: none;
-	}
+	    .sortbar>.sortbox>div>.group.size>.selected {
+	        background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sort-by-size-selected.png);
+	    }
 
-	.pagerbox {
-		position: absolute;
+	    .sortbar>.sortbox>.control {
+	        margin: 0 22px 16px 0;
+	        font-size: 12px;
+	        font-family: 微軟正黑體;
+	        float: right;
+	    }
 
-	}
+	    .sortbar>.sortbox>.control>span {
+	        cursor: pointer;
+	    }
 
-	.pagerbox > .prev {
-		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-up.png);
-		width:15px;
-		height: 9px;
-		cursor: pointer;
-	}
+	    .sortbar>.sortbox>.control>.spline {
+	        margin: 0 6px;
+	        cursor: default;
+	    }
 
-	.pagerbox > .countbox {
-		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-background.png);
-		background-repeat: no-repeat;
-		width: 25px;
-		height: 202px;
-		margin: 5px 0 5px -5px;
-		background-position: 8px 10px;
-	}
+	    .sortbar>.item, .sortbar>.look {
+	        float: right;
+	        background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sidebar-buttons-open.png);
+	        background-repeat: no-repeat;
+	        background-position: right 1px;
+	        width:40px;
+	        margin-left: 10px;
+	        margin-top:2px;
+	        cursor: pointer;
+	        display: none;
+	        text-align: left;
+	    }
 
-	.pagerbox > .countbox > div {
-		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-spot.png);
-		background-repeat: no-repeat;
-		width: 25px;
-		height: 25px;
-		margin-bottom: 14px;
-		color: white;
-		font-size: 12px;
-		text-align: center;
-		line-height: 25px;
-		cursor: pointer;
-	}
+	    .pagerbox {
+	        position: absolute;
 
-	.pagerbox > .countbox > div.active {
-		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-spot-active.png);
-	}
+	    }
 
-	.pagerbox > .next {
-		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-down.png);
-		width:15px;
-		height: 9px;
-		cursor: pointer;
-	}
+	    .pagerbox > .prev {
+	        background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-up.png);
+	        width:15px;
+	        height: 9px;
+	        cursor: pointer;
+	    }
+
+	    .pagerbox > .countbox {
+	        background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-background.png);
+	        background-repeat: no-repeat;
+	        width: 25px;
+	        height: 202px;
+	        margin: 5px 0 5px -5px;
+	        background-position: 8px 10px;
+	    }
+
+	    .pagerbox > .countbox > div {
+	        background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-spot.png);
+	        background-repeat: no-repeat;
+	        width: 25px;
+	        height: 25px;
+	        margin-bottom: 14px;
+	        color: white;
+	        font-size: 12px;
+	        text-align: center;
+	        line-height: 25px;
+	        cursor: pointer;
+	    }
+
+	    .pagerbox > .countbox > div.active {
+	        background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-spot-active.png);
+	    }
+
+	    .pagerbox > .next {
+	        background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-down.png);
+	        width:15px;
+	        height: 9px;
+	        cursor: pointer;
+	    }
 	</style>
 
 
