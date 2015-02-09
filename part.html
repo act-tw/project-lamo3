@@ -24,6 +24,15 @@
 		    output.push(si[max - 1]);
 		    return output;
 		};
+		function QueryString(name) {
+		    var AllVars = window.location.search.substring(1);
+		    var Vars = AllVars.split("&");
+		    for (i = 0; i < Vars.length; i++) {
+		        var Var = Vars[i].split("=");
+		        if (Var[0].toUpperCase() == name.toUpperCase()) return Var[1];
+		    }
+		    return "";
+		}
     </script>
 </head>
 <body style="height: 2000px;">
@@ -223,7 +232,6 @@
 	        background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-background.png);
 	        background-repeat: no-repeat;
 	        width: 25px;
-	        height: 202px;
 	        margin: 5px 0 5px -5px;
 	        background-position: 8px 10px;
 	    }
@@ -233,7 +241,7 @@
 	        background-repeat: no-repeat;
 	        width: 25px;
 	        height: 25px;
-	        margin-bottom: 14px;
+	        padding-bottom: 14px;
 	        color: white;
 	        font-size: 12px;
 	        text-align: center;
@@ -350,6 +358,94 @@
 					var rowCount = parseInt($waterfall.width()/itemWidth, 10);
 					$(".pagerbox").css("left",rowCount*itemWidth+18);
 				});	
+
+
+				//#############################################################
+				//pager
+
+				var allCount = 600 ,pagerSize= 60; //測試資料
+				var smfp = QueryString("smfp");
+				if (smfp==="") {
+					smfp = 1;
+				} else {
+					try {
+						smfp = parseInt(smfp, 10);	
+					} catch(e) {
+						smfp = 1;
+					}
+				}
+				var pages = Math.ceil(allCount/pagerSize);
+				var html="";
+				var max = pages;
+				var cur = smfp;
+				if (max<=5) {
+				  for(var i=1;i<=max;i++) {
+				    html+="<div";
+				    if(i==cur) {
+				      html+=" class=\"active\"";
+				    }
+				    html+=">" + i+ "</div>";
+				  }
+				} else {
+				  if (cur<4) {
+				    for (var i=1;i<=5;i++) {
+				      html+="<div";
+				      if(i==cur) {
+				        html+=" class=\"active\"";
+				      }
+				      html+=">" + i+ "</div>";     
+				    }
+				  } else if (cur>=max-2) {
+				    for(var i=max-4;i<=max;i++) {
+				      html+="<div";
+				      if (i==cur) {
+				        html += " class=\"active\"";
+				      }
+				      html+=">"+i+"</div>";
+				    }
+				  } else {
+				    for(var i=-2;i<=2;i++) {
+				      html+="<div";
+				      if (cur+i==cur) {
+				        html += " class=\"active\"";
+				      }
+				      html+=">"+(cur+i)+"</div>";
+				    }
+				  }
+				}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				
+				if (pages <= 5) {
+					$(".pagerbox>.prev,.pagerbox>.next").hide();
+					
+				} 
+				$(".pagerbox>.countbox").html(html);
+				
+
+
+
+
+
+
 			})(); //pager
 		});
 	</script>
@@ -397,13 +493,7 @@
 	<div style="clear:both;">&nbsp;</div>
 	<div class="pagerbox">
 		<div class="prev">&nbsp;</div>
-		<div class="countbox">
-			<div>1</div>
-			<div>2</div>
-			<div class="active">3</div>
-			<div>4</div>
-			<div>5</div>
-		</div>
+		<div class="countbox">&nbsp;</div>
 		<div class="next">&nbsp;</div>
 	</div>
 	<div class="waterfall">
