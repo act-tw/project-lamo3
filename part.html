@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+    	String.prototype.splitLast = function (separator) {
+		    var si = this.split(separator);
+		    var sb = "";
+		    var max = si.length;
+		    for (var i = 0; i < max; i++) {
+		        if (i < max - 1) {
+		            sb += si[i];
+		            if (i < max - 2) {
+		                sb += separator;
+		            }
+		        }
+		    }
+		    var output = [];
+		    if (sb != "") {
+		        output.push(sb);
+		    }
+		    output.push(si[max - 1]);
+		    return output;
+		};
+    </script>
 </head>
 <body style="height: 2000px;">
 
@@ -39,7 +60,7 @@
 		font-family: arial;
 	}
 
-	.navibar>.home {
+	.navibar>a>.home {
 		background-image: url(http://photo.lamo3.com.tw/eshop/common/crumbs-home.png);
 		width: 17px;
 		height: 13px;
@@ -52,6 +73,11 @@
 		width:7px;
 		height: 10px;
 		display: inline-block;
+	}
+
+	.navibar>a {
+		color:black;
+		text-decoration: none;
 	}
 
 	.sortbar {
@@ -72,36 +98,89 @@
 		font-family: arial;
 		border-bottom: 1px solid #999999;
 		padding: 0 5px;
+		float: left;
+	}
+
+	.sortbar>div.close {
+		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sidebar-buttons-close.png);
 	}
 
 	.sortbar>.sortbox {
 		position: absolute;
 		z-index: 1;
 		width:290px;
-		background-image: url(static/images/demo/temp.png);
+		background-position: left bottom;
 		background-color:#efeeec;
+		display: none;
+		margin-top: 21px;
 	}
 
 	.sortbar>.sortbox>div {
 		display: inline-block;
-		margin:0 auto;
+		margin:0 95px 38px auto;
 	}
 
 	.sortbar>.sortbox>div>.group {
-		padding-top:45px;
+		padding-top:38px;
 		font-size:13px;
 		font-family: arial,微軟正黑體;
-
+		margin-left:74px;
 	}
 
 	.sortbar>.sortbox>div>.group>div {
-		padding:6px 22px;
+		background-repeat: no-repeat;
+		cursor: pointer;
+	}
+
+	.sortbar>.sortbox>div>.group.price>div {
+		padding:6px 18px;
+	}
+
+	.sortbar>.sortbox>div>.group.size>div {
+		padding:11px 18px;
+	}
+
+	.sortbar>.sortbox>div>div.price>.no,.sortbar>.sortbox>div>div.size>.no {
+		font-weight: bold;
+		cursor: default ;
 	}
 
 	.sortbar>.sortbox>div>.group.price>.selected {
 		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sort-by-price-selected.png);
-
 	}
+
+	.sortbar>.sortbox>div>.group.size>.selected {
+		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sort-by-size-selected.png);
+	}
+
+	.sortbar>.sortbox>.control {
+		margin: 0 22px 16px 0;
+		font-size: 12px;
+		font-family: 微軟正黑體;
+		float: right;
+	}
+
+	.sortbar>.sortbox>.control>span {
+		cursor: pointer;
+	}
+
+	.sortbar>.sortbox>.control>.spline {
+		margin: 0 6px;
+		cursor: default;
+	}
+
+	.sortbar>.item, .sortbar>.look {
+		float: right;
+		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/sidebar-buttons-open.png);
+		background-repeat: no-repeat;
+		background-position: right 1px;
+		width:40px;
+		margin-left: 10px;
+		margin-top:2px;
+		cursor: pointer;
+		display: none;
+	}
+
 	</style>
 
 
@@ -133,6 +212,68 @@
 			$(window).load(function() {
 				$(window).resize();
 			});
+			//-----
+			(function() {
+				$waterfall.on("mouseenter mouseleave",">div>a>img",function() {
+					var $this = $(this);
+		            var src = $this.attr("src");
+		            var srcSplitLast;
+		            if (src.indexOf("-2.") < 0) {
+		                srcSplitLast = src.splitLast(".");
+		                var url = srcSplitLast[0] + "-2." + srcSplitLast[1];
+		                var img = new Image();
+		                img.src = url;
+		                img.onload = function () {
+		                    $this.attr("src", url);
+		                };
+		            } else {
+		                srcSplitLast = src.splitLast("-2.");
+		                $this.attr("src", srcSplitLast[0] + "." + srcSplitLast[1]);
+		            }
+				});
+			})(); //switch items image
+			(function() {
+				function open() {
+					$(".sortbar>.flag").addClass("close");
+					$(".sortbox").show();
+				}
+				function close() {
+					$(".sortbar>.flag").removeClass("close");
+					$(".sortbox").hide();
+				}
+				$(document).click(function() {
+					close();
+				});
+				$(".sortbar>.sortbox").click(function(e) {
+					e.stopPropagation();
+				});
+				$(".sortbar>.flag").click(function(e) {
+					if ($(this).hasClass("close")) {
+						close();
+					} else {
+						open();
+					}
+					e.stopPropagation();
+				});
+				$(".sortbar>.sortbox>.control>.confirmbtn").click(function() {
+					close();
+				});
+				$(".sortbar>.sortbox>.control>.clearbtn").click(function() {
+					$(".sortbar>.sortbox>div>div>div").removeClass("selected");
+				});
+				$(".sortbar>.sortbox>div>div.price,.sortbar>.sortbox>div>div.size").on("click","div:not('.no')",function(){
+					$(this).parent().find(".selected").removeClass('selected').end().end().addClass("selected");
+				});
+
+				(function() {
+					$(window).resize(function() {
+						var itemWidth = $items.eq(0).outerWidth(true);
+						var rowCount = parseInt($waterfall.width()/itemWidth, 10);
+						$(".sortbar").width(rowCount*itemWidth-18);
+						$(".sortbar>.item,.sortbar>.look").show();
+					});					
+				})(); //item look set width
+			})();//sort
 		});
 	</script>
 
@@ -141,12 +282,12 @@
 	
 
 	<div class="navibar">
-		<span class="home">&nbsp;</span>
-		測試位置
+		<a href="#path"><span class="home">&nbsp;</span></a>
+		<a href="#path">測試位置</a>
 		<span class="flag">&nbsp;</span>
-		測試位置
+		<a href="#path">測試位置</a>
 		<span class="flag">&nbsp;</span>
-		測試位置
+		<a href="#path">測試位置</a>
 	</div>
 
 	<div class="sortbar">
@@ -154,62 +295,151 @@
 		<div class="sortbox">
 			<div>
 				<div class="group price">
-					<div>價格</div>
+					<div class="no">價格</div>
 					<div class="selected">價格由高至低</div>
 					<div>價格由低至高</div>
 				</div>
-				<div class="group">
-					<div>價格</div>
-					<div>價格由高至低</div>
-					<div>價格由低至高</div>
+				<div class="group size">
+					<div class="no">尺寸 ( 可複選 )</div>
+					<div>XS</div>
+					<div class="selected">S</div>
+					<div>M</div>
+					<div>L</div>
+					<div>XL</div>
+					<div>F</div>
 				</div>
 			</div>
+			<div class="control">
+				<span class="clearbtn">清除</span>
+				<span class="spline">|</span>
+				<span class="confirmbtn">確認</span>
+			</div>
 		</div>
-
+		<div class="look">look</div>
+		<div class="item">item</div>
 	</div>
-
+	<div style="clear:both;">&nbsp;</div>
 	<div class="waterfall">
 		<div>
 			<a href="#link">
-				<img src="http://img1.fzpp.com/img/201403/30/12-11-46-73-1.jpg">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
 			</a>
 		</div>
 		<div>
 			<a href="#link">
-				<img src="http://img03.taobaocdn.com/bao/uploaded/i3/16869023183050967/T1olqCXBXXXXXXXXXX_!!0-item_pic.jpg">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part002.jpg">
 			</a>
 		</div>
 		<div>
 			<a href="#link">
-				<img src="https://s.yimg.com/aw/api/res/1.2/PHOEEnp98PnT51YuPPBnhg--/YXBwaWQ9eXR3YXVjdGlvbnNlcnZpY2U7aD00MDA7cT04NTtzcj0xLjI7c3M9MS4yO3c9Mjgw/http://nevec-img.zenfs.com/prod/tw_ec05-7/821a3d4d-798b-494e-abea-be1a6b34eea7.jpg">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part003.jpg">
 			</a>
 		</div>
 		<div>
 			<a href="#link">
-				<img src="http://61.67.232.229/ArDocCDN/AR00/AR009758/Content/AR009758-EP1600/11172-b.jpg">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
 			</a>
 		</div>
 		<div>
 			<a href="#link">
-				<img src="http://img1.nz86.com/upload/picture/customer/77/11/3/37395144784474495.jpg">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
 			</a>
 		</div>
 		<div>
 			<a href="#link">
-				<img src="http://www.qng.com.tw/data/item/1414478828_m">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part002.jpg">
 			</a>
 		</div>
 		<div>
 			<a href="#link">
-				<img src="http://mypaper.pchome.com.tw/show/article/026955/A1327140640">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part003.jpg">
 			</a>
 		</div>
 		<div>
 			<a href="#link">
-				<img src="http://2.bp.blogspot.com/-4q4T6n6Nrks/U5IIrURC-jI/AAAAAAAAJk0/FpFXgR_H6dA/s280-c/2014-06-07_023001.png">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
 			</a>
 		</div>
-	
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part002.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part003.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part002.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part003.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part002.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part003.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part002.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part003.jpg">
+			</a>
+		</div>
+		<div>
+			<a href="#link">
+				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
+			</a>
+		</div>
 	</div>
 
 
