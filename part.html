@@ -181,6 +181,50 @@
 		display: none;
 	}
 
+	.pagerbox {
+		position: absolute;
+
+	}
+
+	.pagerbox > .prev {
+		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-up.png);
+		width:15px;
+		height: 9px;
+		cursor: pointer;
+	}
+
+	.pagerbox > .countbox {
+		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-background.png);
+		background-repeat: no-repeat;
+		width: 25px;
+		height: 202px;
+		margin: 5px 0 5px -5px;
+		background-position: 8px 10px;
+	}
+
+	.pagerbox > .countbox > div {
+		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-spot.png);
+		background-repeat: no-repeat;
+		width: 25px;
+		height: 25px;
+		margin-bottom: 14px;
+		color: white;
+		font-size: 12px;
+		text-align: center;
+		line-height: 25px;
+		cursor: pointer;
+	}
+
+	.pagerbox > .countbox > div.active {
+		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-spot-active.png);
+	}
+
+	.pagerbox > .next {
+		background-image: url(http://photo.lamo3.com.tw/eshop/product-list/pagination-icons-down.png);
+		width:15px;
+		height: 9px;
+		cursor: pointer;
+	}
 	</style>
 
 
@@ -274,6 +318,13 @@
 					});					
 				})(); //item look set width
 			})();//sort
+			(function() {
+				$(window).resize(function() {
+					var itemWidth = $items.eq(0).outerWidth(true);
+					var rowCount = parseInt($waterfall.width()/itemWidth, 10);
+					$(".pagerbox").css("left",rowCount*itemWidth+18);
+				});	
+			})(); //pager
 		});
 	</script>
 
@@ -282,14 +333,13 @@
 	
 
 	<div class="navibar">
-		<a href="#path"><span class="home">&nbsp;</span></a>
+		<a href="../Shop"><span class="home">&nbsp;</span></a>
 		<a href="#path">測試位置</a>
 		<span class="flag">&nbsp;</span>
 		<a href="#path">測試位置</a>
 		<span class="flag">&nbsp;</span>
 		<a href="#path">測試位置</a>
 	</div>
-
 	<div class="sortbar">
 		<div class="flag">sort by</div>
 		<div class="sortbox">
@@ -319,6 +369,17 @@
 		<div class="item">item</div>
 	</div>
 	<div style="clear:both;">&nbsp;</div>
+	<div class="pagerbox">
+		<div class="prev">&nbsp;</div>
+		<div class="countbox">
+			<div>1</div>
+			<div>2</div>
+			<div class="active">3</div>
+			<div>4</div>
+			<div>5</div>
+		</div>
+		<div class="next">&nbsp;</div>
+	</div>
 	<div class="waterfall">
 		<div>
 			<a href="#link">
