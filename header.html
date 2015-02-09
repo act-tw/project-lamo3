@@ -16,7 +16,7 @@
 		    width: 100%;
 		    min-width: 1024px;
 		    max-width: 1920px;
-		    margin: 0 auto;
+		    margin: 0 auto !important;
 		}
 
         #container {
@@ -371,6 +371,44 @@
                     margin-top: -378px;
                     margin-left: 49px;
                 }
+
+                .top {
+					position: fixed;
+					bottom: 153px;
+					width: 100%;
+					max-width: 1920px;
+					min-width: 1024px;
+					z-index: 10;
+					height: 0px;
+                }
+
+                .top > .baloon {
+                	background-image: url(http://photo.lamo3.com.tw/eshop/common/gotop-baloon.png);
+                	width: 43px;
+                	height: 71px;
+                	float:right;
+                	margin-top: -71px;
+                	cursor: pointer;
+                }
+
+                .top > .string {
+					width: 12px;
+					height: 86px;
+					float: right;
+					margin-right: 12px;
+					margin-top: -5px;
+					cursor: pointer;
+                }
+
+                .top > .string.s1 {
+                	background-image: url(http://photo.lamo3.com.tw/eshop/common/gotop-string-1.png);
+                }
+                .top > .string.s2 {
+                	background-image: url(http://photo.lamo3.com.tw/eshop/common/gotop-string-2.png);
+                }
+                .top > .string.s3 {
+                	background-image: url(http://photo.lamo3.com.tw/eshop/common/gotop-string-3.png);
+                }
     </style>
 
 
@@ -540,6 +578,26 @@
                		$(".header>.eventbox>div>.eventcontent").load("../UserFiles/htmlCustomPage1.htm");
                 });
             })(); //event
+            (function() {
+            	function run() {
+            		if ($(document).scrollTop()>100) {
+            			if ($(".top").is(":visible")) {
+            				var rnd = parseInt(Math.random()*3,10) +1;
+            				$(".top>.string").attr("class","string s" + rnd);
+            			} else {
+            				$(".top").fadeIn();
+            			}
+            		} else {
+            			if ($(".top").is(":visible")) {
+            				$(".top").fadeOut();
+            			}
+            		}
+            	}
+            	$(".top>.baloon,.top>.string").click(function() {
+            		$("html,body").animate({"scrollTop":0});
+            	});
+            	setInterval(run, 250);
+            })(); //top
         });
     </script>
 
@@ -642,6 +700,10 @@
                 <div class="eventbutton">&nbsp;</div>
                 <div class="eventcontent">&nbsp;</div>
             </div>
+        </div>
+        <div class="top">
+        	<div class="baloon">&nbsp;</div>
+        	<div class="string">&nbsp;</div>
         </div>
     </div>
 
