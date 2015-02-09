@@ -12,10 +12,12 @@
 
 
     <style>
-        body
-        {
-            margin: 0;
-        }
+        body {
+		    width: 100%;
+		    min-width: 1024px;
+		    max-width: 1920px;
+		    margin: 0 auto;
+		}
 
         #container {
         	padding-top: 148px;
@@ -38,8 +40,6 @@
                 height: 148px;
                 max-width: 1920px;
                 min-width: 1024px;
-                margin: 0 auto;
-                
             }
 
                 .header > .box > .control
@@ -266,7 +266,6 @@
                 opacity: 0.9;
                 max-width: 1920px;
                 min-width: 1024px;
-                margin: 0 auto;
                 margin-top: -8px;
                 position: relative;
                 z-index: -1;
@@ -323,7 +322,6 @@
                     background-color: #f0edec;
                     opacity: 0.9;
                     height: 430px;
-                    margin: 0 auto;
                     position: relative;
                 }
 
@@ -529,7 +527,7 @@
                 $(".header>.customerservicebox>div>.close").click(function () {
                     $(".header>.customerservicebox").animate({ hide: "hide", height: 0 });
                 });
-                $(".header>.customerservicebox>div>.outbox").html("測試內容");
+                $(".header>.customerservicebox>div>.outbox").load("../UserFiles/htmlCustomPage2.htm");
             })(); //customerservice
             (function () {
                 $(".header>.eventbox>div>.eventbutton").click(function () {
@@ -539,7 +537,7 @@
                     } else {
                         $(".header>.eventbox").animate({ "right": -190 });
                     }
-                    $(".header>.eventbox>div>.eventcontent").html("測試內容");
+               		$(".header>.eventbox>div>.eventcontent").load("../UserFiles/htmlCustomPage1.htm");
                 });
             })(); //event
         });
