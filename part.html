@@ -79,11 +79,117 @@
 	        margin-bottom:20px;
 	        background-color: white;
 	        padding:4px;
+	        position: relative;
 	    }
 
-	    .waterfall>div>a>img {
-	        display: block;
+	    .waterfall>div>.front{
+	        transition: all .4s linear;
 	    }
+
+        .waterfall>div>.front.rotate {
+            transform: rotateY(90deg);
+        }
+
+	    .waterfall>div>.front>a>img {
+	        display: block;
+	        width: 280px;
+	    }
+
+        .waterfall>div>.front>.namepricebox {
+            width: 100%;
+            height: 97px;
+            position: relative;
+        }
+
+        .waterfall>div>.front>.namepricebox>.namelabel {
+            text-align: center;
+            padding-top: 25px;
+            padding-bottom: 15px;
+        }
+
+        .waterfall>div>.front>.namepricebox>.pricelabel {
+            text-align: center;
+            padding-bottom: 35px;
+        }
+
+        .waterfall>div>.front>.namepricebox>.pricelabel>span {
+            color: #323232
+        }
+
+        .waterfall>div>.front>.namepricebox>.pricelabel>.original {
+            margin-right: 25px;
+            text-decoration: line-through;
+            color: #656565;
+        }
+
+        .waterfall>div>.front>.namepricebox>.infobtn {
+            background-image: url(http://photo.lamo3.com.tw/eshop/product-list/info-button.png);
+            width: 54px;
+            height: 20px;
+            cursor: pointer;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .waterfall>div>.back {
+            position: absolute;
+            width: 280px;
+            height: 100%;
+            top: 0;
+            transform: rotateY(-90deg); 
+            transition: all .4s linear;
+            
+        }
+
+        .waterfall>div>.back.rotate {
+            transform: rotateY(0); 
+        }
+
+        .waterfall>div>.back>div {
+            padding: 0 30px;
+        }
+
+        .waterfall>div>.back>div>.namelabel>.pricelabel {
+            margin-top: 10px;
+        }
+
+        .waterfall>div>.back>div>.namelabel>.dashline {
+            background-image: url(http://photo.lamo3.com.tw/eshop/product-detail/dash-line.png);
+            width: 100%;
+            height: 6px;
+            margin-top: 20px;
+        }
+
+        .waterfall>div>.back>div>.namelabel>.sizebox {
+            margin-top: 20px;
+        }
+
+        .waterfall>div>.back>div>.namelabel>.sizebox>* {
+            display: inline-block;
+            float: left;
+            width: 26px;
+            height: 19px;
+            text-align: center;
+            line-height: 19px;
+            color: #333333;
+        }
+
+        .waterfall>div>.back>div>.namelabel>.sizebox>*.selected {
+            background-image: url(http://photo.lamo3.com.tw/eshop/product-list/size-selected.png);
+        }
+
+        .waterfall>div>.back>.backbtn {
+            background-image: url(http://photo.lamo3.com.tw/eshop/product-list/back-button.png);
+            width: 54px;
+            height: 20px;
+            cursor: pointer;
+            position: absolute;
+            bottom: 4px;
+            right: 0;
+            padding: 0;
+        }
+
 
 	    .navibar {
 	        margin-bottom: 16px;
@@ -267,220 +373,238 @@
 
 
 	<script>
-		$(function() {
-			function gotourl(option,isReturnUrl) {
-				option = $.extend({
-					m: QueryString("m"),
-					p: QueryString("p"),
-					pat: QueryString("pat"),
-					o: QueryString("o"),
-					sa: QueryString("sa"),
-					smfp: QueryString("smfp"),
-					idno: QueryString("idno")
-				}, option);
-				var param="";
-				for(var a in option) {
-					if (option[a]!=="") {
-						param+="&" + a + "=" + option[a];
-					}
-				}
-				if (isReturnUrl) {
-					return location.pathname + "?" + param.substr(1);
-				} else {
-					location.href = location.pathname + "?" + param.substr(1);
-				}
-			}
-			(function() {
-				var $waterfall = $(".waterfall");
-				var $items = $waterfall.find(">div");
-				function getMinIndex(ary) {
-					return ary.indexOf(Math.min.apply(null,ary));
-				}
-				$(window).resize(function() {
-					var itemWidth = $items.eq(0).outerWidth(true);
-					var rowCount = parseInt($waterfall.width()/itemWidth, 10);
-					var rowHeight=[];
-					for (var i=0;i<rowCount;i++) {
-						rowHeight.push($items.eq(i).outerHeight(true));
-						$items.eq(i).removeAttr("style");
-					}
-					for (var i=rowCount;i<$items.length;i++) {
-						var minIndex = getMinIndex(rowHeight);
-						$items.eq(i).css({"position":"absolute","left":minIndex*itemWidth,"top":rowHeight[minIndex]});
-						rowHeight[minIndex]+=$items.eq(i).outerHeight(true);
-					}
-					$waterfall.height(Math.max.apply(null,rowHeight));
-				}).resize();
-				$(window).load(function() {
-					$(window).resize();
-				});
-			})(); //core
-			(function() {
-				var $waterfall = $(".waterfall");
-				$waterfall.on("mouseenter mouseleave",">div>a>img",function() {
-					var $this = $(this);
-		            var src = $this.attr("src");
-		            var srcSplitLast;
-		            if (src.indexOf("-2.") < 0) {
-		                srcSplitLast = src.splitLast(".");
-		                var url = srcSplitLast[0] + "-2." + srcSplitLast[1];
-		                var img = new Image();
-		                img.src = url;
-		                img.onload = function () {
-		                    $this.attr("src", url);
-		                };
-		            } else {
-		                srcSplitLast = src.splitLast("-2.");
-		                $this.attr("src", srcSplitLast[0] + "." + srcSplitLast[1]);
-		            }
-				});
-			})(); //switch items image
-			(function() {
-				function open() {
-					$(".sortbar>.flag").addClass("close");
-					$(".sortbox").show();
-				}
-				function close() {
-					$(".sortbar>.flag").removeClass("close");
-					$(".sortbox").hide();
-				}
-				$(document).click(function() {
-					close();
-				});
-				$(".sortbar>.sortbox").click(function(e) {
-					e.stopPropagation();
-				});
-				$(".sortbar>.flag").click(function(e) {
-					if ($(this).hasClass("close")) {
-						close();
-					} else {
-						open();
-					}
-					e.stopPropagation();
-				});
-				$(".sortbar>.sortbox>.control>.confirmbtn").click(function() {
-					close();
-				});
-				$(".sortbar>.sortbox>.control>.clearbtn").click(function() {
-					$(".sortbar>.sortbox>div>div>div").removeClass("selected");
-				});
-				$(".sortbar>.sortbox>div>div.price,.sortbar>.sortbox>div>div.size").on("click","div:not('.no')",function(){
-					$(this).parent().find(".selected").removeClass('selected').end().end().addClass("selected");
-				});
-				(function() {
-					$(window).resize(function() {
-						var $waterfall = $(".waterfall");
-						var $items = $waterfall.find(">div");
-						var itemWidth = $items.eq(0).outerWidth(true);
-						var rowCount = parseInt($waterfall.width()/itemWidth, 10);
-						$(".sortbar").width(rowCount*itemWidth-18);
-						$(".sortbar>.item,.sortbar>.look").show();
-					});					
-				})(); //adjust item look position
-			})();//sort
-			(function() {
-				$(window).resize(function() {
-					var $waterfall = $(".waterfall");
-					var $items = $waterfall.find(">div");
-					var itemWidth = $items.eq(0).outerWidth(true);
-					var rowCount = parseInt($waterfall.width()/itemWidth, 10);
-					$(".pagerbox").css("left",rowCount*itemWidth+18);
-				});	//adjust pager position
-				(function() {
-					var max = Math.ceil(allCount/pagerSize);
-					var cur = QueryString("smfp");
-					if (cur==="") {
-						cur = 1;
-					} else {
-						cur = parseInt(cur, 10);
-						if (isNaN(cur)) {
-							cur = 1;
-						}
-					}
-					var html="";
-					if (max<=5) {
-					  for(var i=1;i<=max;i++) {
-					    html+="<div";
-					    if(i===cur) {
-					      html+=" class=\"active\"";
-					    }
-					    html+=">" + i+ "</div>";
-					  }
-					} else {
-					  if (cur<4) {
-					    for (var i=1;i<=5;i++) {
-					      html+="<div";
-					      if(i===cur) {
-					        html+=" class=\"active\"";
-					      }
-					      html+=">" + i+ "</div>";     
-					    }
-					  } else if (cur>=max-2) {
-					    for(var i=max-4;i<=max;i++) {
-					      html+="<div";
-					      if (i===cur) {
-					        html += " class=\"active\"";
-					      }
-					      html+=">"+i+"</div>";
-					    }
-					  } else {
-					    for(var i=-2;i<=2;i++) {
-					      html+="<div";
-					      if (cur+i===cur) {
-					        html += " class=\"active\"";
-					      }
-					      html+=">"+(cur+i)+"</div>";
-					    }
-					  }
-					}
-					if (max <= 5) {
-						$(".pagerbox>.prev,.pagerbox>.next").hide();
-					} 
-					$(".pagerbox>.countbox").html(html);
-					if (cur===1) {
-						$(".pagerbox>.prev").css("visibility","hidden");
-					} else if (cur===max) {
-						$(".pagerbox>.next").css("visibility","hidden");
-					}
-					$(".pagerbox>.countbox").on("click","div",function() {
-						gotourl({smfp:$(this).text()});
-					});
-					$(".pagerbox>.prev").click(function() {
-						gotourl({smfp: cur-1});
-					});
-					$(".pagerbox>.next").click(function() {
-						gotourl({smfp: cur+1});
-					});
-				})(); //build pager count
-			})(); //pager
-			(function() {
-				if (QueryString("pat")==="1") {
-					if (QueryString("idno")==="") {
-						$(".sortbar").hide();	
-					}
-					$.getJSON("../common/ajax/menucmd.ashx",function(data){
-						var html="";
-						for (var i=0,max=data.length;i<max;i++) {
-							if (data[i].Idno === parseInt(QueryString("m"), 10)) {
-								html += "<a href=\"" + gotourl({pat:""},true) + "\">" + data[i].Name + "</a>";
-								html += "<span class=\"flag\">&nbsp;</span>";
-								html += "<a href=\"" + gotourl({idno:""},true) + "\">穿搭頁</a>";
-								break;
-							}
-						}
-						if (window["patIdno"] && window["patName"]) {
-							html += "<span class=\"flag\">&nbsp;</span>";
-							html += "<a href=\"" + gotourl({idno:patIdno},true) + "\">" + patName + "</a>";
-						}
-						$(".navibar").append(html);
-					});
-				} else {
-					//###########
-					//#列表頁使用#
-					//###########
-				}
-			})(); //navi
-		});
+	    $(function () {
+	        function gotourl(option, isReturnUrl) {
+	            option = $.extend({
+	                m: QueryString("m"),
+	                p: QueryString("p"),
+	                pat: QueryString("pat"),
+	                o: QueryString("o"),
+	                sa: QueryString("sa"),
+	                smfp: QueryString("smfp"),
+	                idno: QueryString("idno")
+	            }, option);
+	            var param = "";
+	            for (var a in option) {
+	                if (option[a] !== "") {
+	                    param += "&" + a + "=" + option[a];
+	                }
+	            }
+	            if (isReturnUrl) {
+	                return location.pathname + "?" + param.substr(1);
+	            } else {
+	                location.href = location.pathname + "?" + param.substr(1);
+	            }
+	        }
+	        (function () {
+	            var $waterfall = $(".waterfall");
+	            var $items = $waterfall.find(">div");
+	            function getMinIndex(ary) {
+	                return ary.indexOf(Math.min.apply(null, ary));
+	            }
+	            $(window).resize(function () {
+	                var itemWidth = $items.eq(0).outerWidth(true);
+	                var rowCount = parseInt($waterfall.width() / itemWidth, 10);
+	                var rowHeight = [];
+	                for (var i = 0; i < rowCount; i++) {
+	                    rowHeight.push($items.eq(i).outerHeight(true));
+	                    $items.eq(i).removeAttr("style");
+	                }
+	                for (var i = rowCount; i < $items.length; i++) {
+	                    var minIndex = getMinIndex(rowHeight);
+	                    $items.eq(i).css({ "position": "absolute", "left": minIndex * itemWidth, "top": rowHeight[minIndex] });
+	                    rowHeight[minIndex] += $items.eq(i).outerHeight(true);
+	                }
+	                $waterfall.height(Math.max.apply(null, rowHeight));
+	            }).resize();
+	            $(window).load(function () {
+	                $(window).resize();
+	            });
+	        })(); //core
+	        (function () {
+	            var $waterfall = $(".waterfall");
+	            $waterfall.on("mouseenter mouseleave", ">div>.front>a>img", function () {
+	                var $this = $(this);
+	                var src = $this.attr("src");
+	                var srcSplitLast;
+	                if (src.indexOf("-2.") < 0) {
+	                    srcSplitLast = src.splitLast(".");
+	                    var url = srcSplitLast[0] + "-2." + srcSplitLast[1];
+	                    var img = new Image();
+	                    img.src = url;
+	                    img.onload = function () {
+	                        $this.attr("src", url);
+	                    };
+	                } else {
+	                    srcSplitLast = src.splitLast("-2.");
+	                    $this.attr("src", srcSplitLast[0] + "." + srcSplitLast[1]);
+	                }
+	            });
+	        })(); //switch items image
+	        (function () {
+	            function open() {
+	                $(".sortbar>.flag").addClass("close");
+	                $(".sortbox").show();
+	            }
+	            function close() {
+	                $(".sortbar>.flag").removeClass("close");
+	                $(".sortbox").hide();
+	            }
+	            $(document).click(function () {
+	                close();
+	            });
+	            $(".sortbar>.sortbox").click(function (e) {
+	                e.stopPropagation();
+	            });
+	            $(".sortbar>.flag").click(function (e) {
+	                if ($(this).hasClass("close")) {
+	                    close();
+	                } else {
+	                    open();
+	                }
+	                e.stopPropagation();
+	            });
+	            $(".sortbar>.sortbox>.control>.confirmbtn").click(function () {
+	                close();
+	            });
+	            $(".sortbar>.sortbox>.control>.clearbtn").click(function () {
+	                $(".sortbar>.sortbox>div>div>div").removeClass("selected");
+	            });
+	            $(".sortbar>.sortbox>div>div.price,.sortbar>.sortbox>div>div.size").on("click", "div:not('.no')", function () {
+	                $(this).parent().find(".selected").removeClass('selected').end().end().addClass("selected");
+	            });
+	            (function () {
+	                $(window).resize(function () {
+	                    var $waterfall = $(".waterfall");
+	                    var $items = $waterfall.find(">div");
+	                    var itemWidth = $items.eq(0).outerWidth(true);
+	                    var rowCount = parseInt($waterfall.width() / itemWidth, 10);
+	                    $(".sortbar").width(rowCount * itemWidth - 18);
+	                    $(".sortbar>.item,.sortbar>.look").show();
+	                });
+	            })(); //adjust item look position
+	        })();//sort
+	        (function () {
+	            $(window).resize(function () {
+	                var $waterfall = $(".waterfall");
+	                var $items = $waterfall.find(">div");
+	                var itemWidth = $items.eq(0).outerWidth(true);
+	                var rowCount = parseInt($waterfall.width() / itemWidth, 10);
+	                $(".pagerbox").css("left", rowCount * itemWidth + 18);
+	            });	//adjust pager position
+	            (function () {
+	                var max = Math.ceil(allCount / pagerSize);
+	                var cur = QueryString("smfp");
+	                if (cur === "") {
+	                    cur = 1;
+	                } else {
+	                    cur = parseInt(cur, 10);
+	                    if (isNaN(cur)) {
+	                        cur = 1;
+	                    }
+	                }
+	                var html = "";
+	                if (max <= 5) {
+	                    for (var i = 1; i <= max; i++) {
+	                        html += "<div";
+	                        if (i === cur) {
+	                            html += " class=\"active\"";
+	                        }
+	                        html += ">" + i + "</div>";
+	                    }
+	                } else {
+	                    if (cur < 4) {
+	                        for (var i = 1; i <= 5; i++) {
+	                            html += "<div";
+	                            if (i === cur) {
+	                                html += " class=\"active\"";
+	                            }
+	                            html += ">" + i + "</div>";
+	                        }
+	                    } else if (cur >= max - 2) {
+	                        for (var i = max - 4; i <= max; i++) {
+	                            html += "<div";
+	                            if (i === cur) {
+	                                html += " class=\"active\"";
+	                            }
+	                            html += ">" + i + "</div>";
+	                        }
+	                    } else {
+	                        for (var i = -2; i <= 2; i++) {
+	                            html += "<div";
+	                            if (cur + i === cur) {
+	                                html += " class=\"active\"";
+	                            }
+	                            html += ">" + (cur + i) + "</div>";
+	                        }
+	                    }
+	                }
+	                if (max <= 5) {
+	                    $(".pagerbox>.prev,.pagerbox>.next").hide();
+	                }
+	                $(".pagerbox>.countbox").html(html);
+	                if (cur === 1) {
+	                    $(".pagerbox>.prev").css("visibility", "hidden");
+	                } else if (cur === max) {
+	                    $(".pagerbox>.next").css("visibility", "hidden");
+	                }
+	                $(".pagerbox>.countbox").on("click", "div", function () {
+	                    gotourl({ smfp: $(this).text() });
+	                });
+	                $(".pagerbox>.prev").click(function () {
+	                    gotourl({ smfp: cur - 1 });
+	                });
+	                $(".pagerbox>.next").click(function () {
+	                    gotourl({ smfp: cur + 1 });
+	                });
+	            })(); //build pager count
+	        })(); //pager
+	        (function () {
+	            if (QueryString("pat") === "1") {
+	                $(".sortbar").hide();
+	                $.getJSON("../common/ajax/menucmd.ashx", function (data) {
+	                    var html = "";
+	                    for (var i = 0, max = data.length; i < max; i++) {
+	                        if (data[i].Idno === parseInt(QueryString("m"), 10)) {
+	                            html += "<a href=\"" + gotourl({ pat: "" }, true) + "\">" + data[i].Name + "</a>";
+	                            html += "<span class=\"flag\">&nbsp;</span>";
+	                            html += "<a href=\"" + gotourl({ idno: "" }, true) + "\">穿搭頁</a>";
+	                            break;
+	                        }
+	                    }
+	                    if (window["patIdno"] && window["patName"]) {
+	                        html += "<span class=\"flag\">&nbsp;</span>";
+	                        html += "<a href=\"" + gotourl({ idno: patIdno }, true) + "\">" + patName + "</a>";
+	                    }
+	                    $(".navibar").append(html);
+	                });
+	            } else {
+	                //###########
+	                //#列表頁使用#
+	                //###########
+	            }
+	        })(); //navi
+
+	        (function () {
+	            $(".infobtn").click(function () {
+	                var $front = $(this).parent().parent();
+	                var $back = $front.next();
+	                $front.addClass("rotate").one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function() {
+	                    $back.addClass("rotate");
+	                    $front.unbind();
+	                }); //not support ie8~9
+	            });
+
+	            $(".backbtn").click(function () {
+	                var $back = $(this).parent();
+	                var $front = $back.prev();
+	                $back.removeClass("rotate").one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function () {
+	                    $front.removeClass("rotate");
+	                    $back.unbind();
+	                });
+	            });
+	        })(); // infobtn and backbtn
+	    });
 	</script>
 
 
@@ -533,107 +657,37 @@
 	</div>
 	<div class="waterfall">
 		<asp:Literal ID="litMain" runat="server"></asp:Literal>
+                    
+        <div>
+            <div class="front">
+                <a href="{0}">
+                    <img src="http://www.life8-photo.com/women/pants/52171/b600.jpg"></a>
+                <div class="namepricebox">
+                    <div class="namelabel">拉鍊口袋撞色合身修身超彈力貼腿褲-女</div>
+                    <div class="pricelabel">
+                        <span class="original">NT. 1999</span><span>NT. 999</span>
+                    </div>
+                    <div class="infobtn"></div>
+                </div>
+            </div>
+            <div class="back">
+                <div>
+                    <div class="namelabel">
+                        拉鍊口袋撞色合身修身超彈力貼腿褲-女
+                        <div class="pricelabel">NT. 999</div>
+                        <div class="dashline"></div>
+                        <div class="sizebox">
+                            <span>L</span>
+                            <a href="javascript:void(0);" k="1001" class="selected">M</a>
+                            <a href="javascript:void(0);" k="1002">S</a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="backbtn"></div>
+            </div>
+        </div>
 		<!--
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part002.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part003.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part002.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part003.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part002.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part003.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part002.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part003.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part002.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part003.jpg">
-			</a>
-		</div>
-		<div>
-			<a href="#link">
-				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
-			</a>
-		</div>
 		<div>
 			<a href="#link">
 				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
