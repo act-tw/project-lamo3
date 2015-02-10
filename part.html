@@ -29,7 +29,7 @@
 		    var Vars = AllVars.split("&");
 		    for (i = 0; i < Vars.length; i++) {
 		        var Var = Vars[i].split("=");
-		        if (Var[0].toUpperCase() == name.toUpperCase()) return Var[1];
+		        if (Var[0].toUpperCase() === name.toUpperCase()) return Var[1];
 		    }
 		    return "";
 		}
@@ -106,6 +106,7 @@
 	        width:7px;
 	        height: 10px;
 	        display: inline-block;
+	        margin: 0 5px;
 	    }
 
 	    .navibar>a {
@@ -218,7 +219,7 @@
 
 	    .pagerbox {
 	        position: absolute;
-
+			z-index: 1;
 	    }
 
 	    .pagerbox > .prev {
@@ -267,31 +268,55 @@
 
 	<script>
 		$(function() {
-			var $waterfall = $(".waterfall");
-			var $items = $waterfall.find(">div");
-			function getMinIndex(ary) {
-				return ary.indexOf(Math.min.apply(null,ary));
+			function gotourl(option,isReturnUrl) {
+				option = $.extend({
+					m: QueryString("m"),
+					p: QueryString("p"),
+					pat: QueryString("pat"),
+					o: QueryString("o"),
+					sa: QueryString("sa"),
+					smfp: QueryString("smfp"),
+					idno: QueryString("idno")
+				}, option);
+				var param="";
+				for(var a in option) {
+					if (option[a]!=="") {
+						param+="&" + a + "=" + option[a];
+					}
+				}
+				if (isReturnUrl) {
+					return location.pathname + "?" + param.substr(1);
+				} else {
+					location.href = location.pathname + "?" + param.substr(1);
+				}
 			}
-			$(window).resize(function() {
-				var itemWidth = $items.eq(0).outerWidth(true);
-				var rowCount = parseInt($waterfall.width()/itemWidth, 10);
-				var rowHeight=[];
-				for (var i=0;i<rowCount;i++) {
-					rowHeight.push($items.eq(i).outerHeight(true));
-					$items.eq(i).removeAttr("style");
-				}
-				for (var i=rowCount;i<$items.length;i++) {
-					var minIndex = getMinIndex(rowHeight);
-					$items.eq(i).css({"position":"absolute","left":minIndex*itemWidth,"top":rowHeight[minIndex]});
-					rowHeight[minIndex]+=$items.eq(i).outerHeight(true);
-				}
-				$waterfall.height(Math.max.apply(null,rowHeight));
-			}).resize();
-			$(window).load(function() {
-				$(window).resize();
-			});
-			//-----
 			(function() {
+				var $waterfall = $(".waterfall");
+				var $items = $waterfall.find(">div");
+				function getMinIndex(ary) {
+					return ary.indexOf(Math.min.apply(null,ary));
+				}
+				$(window).resize(function() {
+					var itemWidth = $items.eq(0).outerWidth(true);
+					var rowCount = parseInt($waterfall.width()/itemWidth, 10);
+					var rowHeight=[];
+					for (var i=0;i<rowCount;i++) {
+						rowHeight.push($items.eq(i).outerHeight(true));
+						$items.eq(i).removeAttr("style");
+					}
+					for (var i=rowCount;i<$items.length;i++) {
+						var minIndex = getMinIndex(rowHeight);
+						$items.eq(i).css({"position":"absolute","left":minIndex*itemWidth,"top":rowHeight[minIndex]});
+						rowHeight[minIndex]+=$items.eq(i).outerHeight(true);
+					}
+					$waterfall.height(Math.max.apply(null,rowHeight));
+				}).resize();
+				$(window).load(function() {
+					$(window).resize();
+				});
+			})(); //core
+			(function() {
+				var $waterfall = $(".waterfall");
 				$waterfall.on("mouseenter mouseleave",">div>a>img",function() {
 					var $this = $(this);
 		            var src = $this.attr("src");
@@ -342,111 +367,119 @@
 				$(".sortbar>.sortbox>div>div.price,.sortbar>.sortbox>div>div.size").on("click","div:not('.no')",function(){
 					$(this).parent().find(".selected").removeClass('selected').end().end().addClass("selected");
 				});
-
 				(function() {
 					$(window).resize(function() {
+						var $waterfall = $(".waterfall");
+						var $items = $waterfall.find(">div");
 						var itemWidth = $items.eq(0).outerWidth(true);
 						var rowCount = parseInt($waterfall.width()/itemWidth, 10);
 						$(".sortbar").width(rowCount*itemWidth-18);
 						$(".sortbar>.item,.sortbar>.look").show();
 					});					
-				})(); //item look set width
+				})(); //adjust item look position
 			})();//sort
 			(function() {
 				$(window).resize(function() {
+					var $waterfall = $(".waterfall");
+					var $items = $waterfall.find(">div");
 					var itemWidth = $items.eq(0).outerWidth(true);
 					var rowCount = parseInt($waterfall.width()/itemWidth, 10);
 					$(".pagerbox").css("left",rowCount*itemWidth+18);
-				});	
-
-
-				//#############################################################
-				//pager
-
-				var allCount = 600 ,pagerSize= 60; //測試資料
-				var smfp = QueryString("smfp");
-				if (smfp==="") {
-					smfp = 1;
-				} else {
-					try {
-						smfp = parseInt(smfp, 10);	
-					} catch(e) {
-						smfp = 1;
+				});	//adjust pager position
+				(function() {
+					var max = Math.ceil(allCount/pagerSize);
+					var cur = QueryString("smfp");
+					if (cur==="") {
+						cur = 1;
+					} else {
+						cur = parseInt(cur, 10);
+						if (isNaN(cur)) {
+							cur = 1;
+						}
 					}
-				}
-				var pages = Math.ceil(allCount/pagerSize);
-				var html="";
-				var max = pages;
-				var cur = smfp;
-				if (max<=5) {
-				  for(var i=1;i<=max;i++) {
-				    html+="<div";
-				    if(i==cur) {
-				      html+=" class=\"active\"";
-				    }
-				    html+=">" + i+ "</div>";
-				  }
-				} else {
-				  if (cur<4) {
-				    for (var i=1;i<=5;i++) {
-				      html+="<div";
-				      if(i==cur) {
-				        html+=" class=\"active\"";
-				      }
-				      html+=">" + i+ "</div>";     
-				    }
-				  } else if (cur>=max-2) {
-				    for(var i=max-4;i<=max;i++) {
-				      html+="<div";
-				      if (i==cur) {
-				        html += " class=\"active\"";
-				      }
-				      html+=">"+i+"</div>";
-				    }
-				  } else {
-				    for(var i=-2;i<=2;i++) {
-				      html+="<div";
-				      if (cur+i==cur) {
-				        html += " class=\"active\"";
-				      }
-				      html+=">"+(cur+i)+"</div>";
-				    }
-				  }
-				}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-				
-				if (pages <= 5) {
-					$(".pagerbox>.prev,.pagerbox>.next").hide();
-					
-				} 
-				$(".pagerbox>.countbox").html(html);
-				
-
-
-
-
-
-
+					var html="";
+					if (max<=5) {
+					  for(var i=1;i<=max;i++) {
+					    html+="<div";
+					    if(i===cur) {
+					      html+=" class=\"active\"";
+					    }
+					    html+=">" + i+ "</div>";
+					  }
+					} else {
+					  if (cur<4) {
+					    for (var i=1;i<=5;i++) {
+					      html+="<div";
+					      if(i===cur) {
+					        html+=" class=\"active\"";
+					      }
+					      html+=">" + i+ "</div>";     
+					    }
+					  } else if (cur>=max-2) {
+					    for(var i=max-4;i<=max;i++) {
+					      html+="<div";
+					      if (i===cur) {
+					        html += " class=\"active\"";
+					      }
+					      html+=">"+i+"</div>";
+					    }
+					  } else {
+					    for(var i=-2;i<=2;i++) {
+					      html+="<div";
+					      if (cur+i===cur) {
+					        html += " class=\"active\"";
+					      }
+					      html+=">"+(cur+i)+"</div>";
+					    }
+					  }
+					}
+					if (max <= 5) {
+						$(".pagerbox>.prev,.pagerbox>.next").hide();
+					} 
+					$(".pagerbox>.countbox").html(html);
+					if (cur===1) {
+						$(".pagerbox>.prev").css("visibility","hidden");
+					} else if (cur===max) {
+						$(".pagerbox>.next").css("visibility","hidden");
+					}
+					$(".pagerbox>.countbox").on("click","div",function() {
+						gotourl({smfp:$(this).text()});
+					});
+					$(".pagerbox>.prev").click(function() {
+						gotourl({smfp: cur-1});
+					});
+					$(".pagerbox>.next").click(function() {
+						gotourl({smfp: cur+1});
+					});
+				})(); //build pager count
 			})(); //pager
+			(function() {
+				if (QueryString("pat")==="1") {
+					if (QueryString("idno")==="") {
+						$(".sortbar").hide();	
+					}
+					$.getJSON("../common/ajax/menucmd.ashx",function(data){
+						var html="";
+						for (var i=0,max=data.length;i<max;i++) {
+							if (data[i].Idno === parseInt(QueryString("m"), 10)) {
+								html += "<a href=\"" + gotourl({pat:""},true) + "\">" + data[i].Name + "</a>";
+								html += "<span class=\"flag\">&nbsp;</span>";
+								html += "<a href=\"" + gotourl({idno:""},true) + "\">穿搭頁</a>";
+								break;
+							}
+						}
+						if (window["patIdno"] && window["patName"]) {
+							html += "<span class=\"flag\">&nbsp;</span>";
+							html += "<a href=\"" + gotourl({idno:patIdno},true) + "\">" + patName + "</a>";
+						}
+						$(".navibar").append(html);
+					});
+				} else {
+					//###########
+					//#列表頁使用#
+					//###########
+				}
+			})(); //navi
 		});
 	</script>
 
@@ -456,11 +489,13 @@
 
 	<div class="navibar">
 		<a href="../Shop"><span class="home">&nbsp;</span></a>
+		<!--
 		<a href="#path">測試位置</a>
 		<span class="flag">&nbsp;</span>
 		<a href="#path">測試位置</a>
 		<span class="flag">&nbsp;</span>
 		<a href="#path">測試位置</a>
+		-->
 	</div>
 	<div class="sortbar">
 		<div class="flag">sort by</div>
@@ -497,6 +532,8 @@
 		<div class="next">&nbsp;</div>
 	</div>
 	<div class="waterfall">
+		<asp:Literal ID="litMain" runat="server"></asp:Literal>
+		<!--
 		<div>
 			<a href="#link">
 				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
@@ -617,6 +654,7 @@
 				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
 			</a>
 		</div>
+		-->
 	</div>
 
 
