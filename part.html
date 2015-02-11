@@ -41,28 +41,6 @@
 
 
 	<style>
-	    #container
-	    {
-	        width: 100%;
-	        max-width: 1920px;
-	        min-width: 1024px;
-	    }
-
-        #tbItemList {
-            width: 100%;
-        }
-
-        #ctl00_ContentPlaceHolder1_tdLeft {
-            width: 318px;
-            padding: 0;
-        }
-
-        #ctl00_ContentPlaceHolder1_ilItems {
-            text-align: left;
-            position: relative;
-        }
-        
-
 	     .waterfall {
 	         max-width: 1232px;
 	         min-width: 924px;
@@ -147,6 +125,14 @@
         }
 
         .waterfall>div>.back>div {
+            display: table;
+            height: 100%;
+        }
+
+        .waterfall>div>.back>div>.namelabel {
+            vertical-align: middle;
+            display: table-cell;
+            width: 220px;
             padding: 0 30px;
         }
 
@@ -163,6 +149,7 @@
 
         .waterfall>div>.back>div>.namelabel>.sizebox {
             margin-top: 20px;
+            overflow: hidden;
         }
 
         .waterfall>div>.back>div>.namelabel>.sizebox>* {
@@ -177,6 +164,54 @@
 
         .waterfall>div>.back>div>.namelabel>.sizebox>*.selected {
             background-image: url(http://photo.lamo3.com.tw/eshop/product-list/size-selected.png);
+        }
+
+        .waterfall>div>.back>div>.namelabel>.sizebox>span {
+            color: #c0c0c0;
+            cursor: pointer;
+        }
+
+        .waterfall>div>.back>div>.namelabel>.material {
+            margin-top: 20px;
+        }
+
+        .waterfall>div>.back>div>.namelabel>.addtobag {
+            background-image: url(http://photo.lamo3.com.tw/eshop/product-list/add-to-bag.png);
+            width: 104px;
+            height: 24px;
+            margin-top: 30px;
+            cursor: pointer;
+            background-repeat: no-repeat;
+        }
+
+        .waterfall>div>.back>div>.namelabel>.addtobag:hover {
+            background-image: url(http://photo.lamo3.com.tw/eshop/product-list/add-to-bag-hover.png);
+        }
+
+        .waterfall>div>.back>div>.namelabel>.addtobag.notice {
+            background-image: url(http://photo.lamo3.com.tw/eshop/product-list/arrival-notice.png);
+        }
+
+        .waterfall>div>.back>div>.namelabel>.addtobag.notice:hover {
+            background-image: url(http://photo.lamo3.com.tw/eshop/product-list/arrival-notice-hover.png);
+        }
+
+        .waterfall>div>.back>div>.namelabel>.addtobag.no {
+            background-image: url(http://photo.lamo3.com.tw/eshop/product-list/add-to-bag-disabled.png);
+            cursor: default;
+        }
+
+        .waterfall>div>.back>div>.namelabel>.wishlist {
+            background-image: url(http://photo.lamo3.com.tw/eshop/product-list/wish-list.png);
+            width: 104px;
+            height: 22px;
+            margin-top: 20px;
+            cursor: pointer;
+            background-repeat: no-repeat;
+        }
+
+        .waterfall>div>.back>div>.namelabel>.wishlist:hover {
+            background-image: url(http://photo.lamo3.com.tw/eshop/product-list/wish-list-hover.png);
         }
 
         .waterfall>div>.back>.backbtn {
@@ -373,7 +408,8 @@
 
 
 	<script>
-	    $(function () {
+	    $(function() {
+
 	        function gotourl(option, isReturnUrl) {
 	            option = $.extend({
 	                m: QueryString("m"),
@@ -394,15 +430,19 @@
 	                return location.pathname + "?" + param.substr(1);
 	            } else {
 	                location.href = location.pathname + "?" + param.substr(1);
+	                return null;
 	            }
 	        }
-	        (function () {
+
+	        (function() {
 	            var $waterfall = $(".waterfall");
 	            var $items = $waterfall.find(">div");
+
 	            function getMinIndex(ary) {
 	                return ary.indexOf(Math.min.apply(null, ary));
 	            }
-	            $(window).resize(function () {
+
+	            $(window).resize(function() {
 	                var itemWidth = $items.eq(0).outerWidth(true);
 	                var rowCount = parseInt($waterfall.width() / itemWidth, 10);
 	                var rowHeight = [];
@@ -417,13 +457,13 @@
 	                }
 	                $waterfall.height(Math.max.apply(null, rowHeight));
 	            }).resize();
-	            $(window).load(function () {
+	            $(window).load(function() {
 	                $(window).resize();
 	            });
 	        })(); //core
-	        (function () {
+	        (function() {
 	            var $waterfall = $(".waterfall");
-	            $waterfall.on("mouseenter mouseleave", ">div>.front>a>img", function () {
+	            $waterfall.on("mouseenter mouseleave", ">div>.front>a>img", function() {
 	                var $this = $(this);
 	                var src = $this.attr("src");
 	                var srcSplitLast;
@@ -432,7 +472,7 @@
 	                    var url = srcSplitLast[0] + "-2." + srcSplitLast[1];
 	                    var img = new Image();
 	                    img.src = url;
-	                    img.onload = function () {
+	                    img.onload = function() {
 	                        $this.attr("src", url);
 	                    };
 	                } else {
@@ -441,22 +481,25 @@
 	                }
 	            });
 	        })(); //switch items image
-	        (function () {
+	        (function() {
+
 	            function open() {
 	                $(".sortbar>.flag").addClass("close");
 	                $(".sortbox").show();
 	            }
+
 	            function close() {
 	                $(".sortbar>.flag").removeClass("close");
 	                $(".sortbox").hide();
 	            }
-	            $(document).click(function () {
+
+	            $(document).click(function() {
 	                close();
 	            });
-	            $(".sortbar>.sortbox").click(function (e) {
+	            $(".sortbar>.sortbox").click(function(e) {
 	                e.stopPropagation();
 	            });
-	            $(".sortbar>.flag").click(function (e) {
+	            $(".sortbar>.flag").click(function(e) {
 	                if ($(this).hasClass("close")) {
 	                    close();
 	                } else {
@@ -464,17 +507,17 @@
 	                }
 	                e.stopPropagation();
 	            });
-	            $(".sortbar>.sortbox>.control>.confirmbtn").click(function () {
+	            $(".sortbar>.sortbox>.control>.confirmbtn").click(function() {
 	                close();
 	            });
-	            $(".sortbar>.sortbox>.control>.clearbtn").click(function () {
+	            $(".sortbar>.sortbox>.control>.clearbtn").click(function() {
 	                $(".sortbar>.sortbox>div>div>div").removeClass("selected");
 	            });
-	            $(".sortbar>.sortbox>div>div.price,.sortbar>.sortbox>div>div.size").on("click", "div:not('.no')", function () {
+	            $(".sortbar>.sortbox>div>div.price,.sortbar>.sortbox>div>div.size").on("click", "div:not('.no')", function() {
 	                $(this).parent().find(".selected").removeClass('selected').end().end().addClass("selected");
 	            });
-	            (function () {
-	                $(window).resize(function () {
+	            (function() {
+	                $(window).resize(function() {
 	                    var $waterfall = $(".waterfall");
 	                    var $items = $waterfall.find(">div");
 	                    var itemWidth = $items.eq(0).outerWidth(true);
@@ -483,16 +526,16 @@
 	                    $(".sortbar>.item,.sortbar>.look").show();
 	                });
 	            })(); //adjust item look position
-	        })();//sort
-	        (function () {
-	            $(window).resize(function () {
+	        })(); //sort
+	        (function() {
+	            $(window).resize(function() {
 	                var $waterfall = $(".waterfall");
 	                var $items = $waterfall.find(">div");
 	                var itemWidth = $items.eq(0).outerWidth(true);
 	                var rowCount = parseInt($waterfall.width() / itemWidth, 10);
 	                $(".pagerbox").css("left", rowCount * itemWidth + 18);
-	            });	//adjust pager position
-	            (function () {
+	            }); //adjust pager position
+	            (function() {
 	                var max = Math.ceil(allCount / pagerSize);
 	                var cur = QueryString("smfp");
 	                if (cur === "") {
@@ -548,21 +591,21 @@
 	                } else if (cur === max) {
 	                    $(".pagerbox>.next").css("visibility", "hidden");
 	                }
-	                $(".pagerbox>.countbox").on("click", "div", function () {
+	                $(".pagerbox>.countbox").on("click", "div", function() {
 	                    gotourl({ smfp: $(this).text() });
 	                });
-	                $(".pagerbox>.prev").click(function () {
+	                $(".pagerbox>.prev").click(function() {
 	                    gotourl({ smfp: cur - 1 });
 	                });
-	                $(".pagerbox>.next").click(function () {
+	                $(".pagerbox>.next").click(function() {
 	                    gotourl({ smfp: cur + 1 });
 	                });
 	            })(); //build pager count
 	        })(); //pager
-	        (function () {
+	        (function() {
 	            if (QueryString("pat") === "1") {
 	                $(".sortbar").hide();
-	                $.getJSON("../common/ajax/menucmd.ashx", function (data) {
+	                $.getJSON("../common/ajax/menucmd.ashx", function(data) {
 	                    var html = "";
 	                    for (var i = 0, max = data.length; i < max; i++) {
 	                        if (data[i].Idno === parseInt(QueryString("m"), 10)) {
@@ -584,9 +627,8 @@
 	                //###########
 	            }
 	        })(); //navi
-
-	        (function () {
-	            $(".infobtn").click(function () {
+	        (function() {
+	            $(".infobtn").click(function() {
 	                var $front = $(this).parent().parent();
 	                var $back = $front.next();
 	                $front.addClass("rotate").one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function() {
@@ -595,15 +637,83 @@
 	                }); //not support ie8~9
 	            });
 
-	            $(".backbtn").click(function () {
+	            $(".backbtn").click(function() {
 	                var $back = $(this).parent();
 	                var $front = $back.prev();
-	                $back.removeClass("rotate").one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function () {
+	                $back.removeClass("rotate").one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function() {
 	                    $front.removeClass("rotate");
 	                    $back.unbind();
-	                });
+	                }); //not support ie8~9
 	            });
-	        })(); // infobtn and backbtn
+	        })(); //infobtn and backbtn
+	        (function() {
+	            $(".sizebox>*").click(function() {
+	                $(this).parent().find(">*.selected").removeClass("selected");
+	                $(this).addClass("selected");
+	                if ($(this).attr("s") === "3") {
+	                    $(this).parent().parent().find(".addtobag").removeClass("notice").addClass("no");
+	                } else if ($(this).attr("s") === "2") {
+	                    $(this).parent().parent().find(".addtobag").removeClass("no").addClass("notice");
+	                } else {
+	                    $(this).parent().parent().find(".addtobag").removeClass("no notice");
+	                }
+	            });
+	        })(); //select size
+	        (function() {
+	            $(".namelabel>.addtobag").click(function() {
+	                if ($(this).parent().find(".sizebox>*.selected").length === 0) {
+	                    alert("請選擇尺寸");
+	                } else {
+	                    if (!$(this).hasClass("no")) {
+	                        if ($(this).hasClass("notice")) {
+	                            $("<a>").fancybox({
+	                                width: 500,
+	                                height: 300,
+	                                padding: 0,
+	                                margin: 0,
+	                                centerOnScroll: true,
+	                                enableEscapeButton: false,
+	                                hideOnOverlayClick: false,
+	                                showCloseButton: true,
+	                                scrolling: "no",
+	                                type: "iframe",
+	                                href: "../common/ItemNotify.aspx?mid=" + $(this).parent().find(".sizebox>*.selected").attr("k")
+	                            }).click();
+	                        } else {
+	                            CartAPI.AddToCart($(this).attr("merno1"), $(this).parent().find(".sizebox>*.selected").attr("k"), 1, function(data) {
+	                                if (data.IsSuccess) {
+	                                    try {
+	                                        initShoppingCart();
+	                                    } catch(e) {
+	                                    }
+	                                    alert("已加入購物車");
+	                                } else {
+	                                    alert(data.Message);
+	                                }
+	                            });
+	                        }
+	                    }
+	                }
+	            });
+	        })(); //add to bag
+	        (function() {
+	            $(".namelabel>.wishlist").click(function() {
+	                if ($(this).parent().find(".sizebox>*.selected").length === 0) {
+	                    alert("請選擇尺寸");
+	                } else {
+	                    CartAPI.AddToTrace($(this).prev().attr("merno1"), $(this).parent().find(".sizebox>*.selected").attr("k"), function(data) {
+	                        if (data.IsSuccess) {
+	                            try {
+	                            } catch(e) {
+	                            }
+	                            alert("已加入收藏");
+	                        } else {
+	                            alert(data.Message);
+	                        }
+	                    });
+	                }
+	            });
+	        })(); //wishlist
 	    });
 	</script>
 
@@ -613,13 +723,13 @@
 
 	<div class="navibar">
 		<a href="../Shop"><span class="home">&nbsp;</span></a>
-		<!--
+		<%--
 		<a href="#path">測試位置</a>
 		<span class="flag">&nbsp;</span>
 		<a href="#path">測試位置</a>
 		<span class="flag">&nbsp;</span>
 		<a href="#path">測試位置</a>
-		-->
+		--%>
 	</div>
 	<div class="sortbar">
 		<div class="flag">sort by</div>
@@ -657,7 +767,7 @@
 	</div>
 	<div class="waterfall">
 		<asp:Literal ID="litMain" runat="server"></asp:Literal>
-                    
+        <%--
         <div>
             <div class="front">
                 <a href="{0}">
@@ -678,16 +788,21 @@
                         <div class="dashline"></div>
                         <div class="sizebox">
                             <span>L</span>
-                            <a href="javascript:void(0);" k="1001" class="selected">M</a>
+                            <a href="javascript:void(0);" k="1001">M</a>
                             <a href="javascript:void(0);" k="1002">S</a>
                         </div>
-
+                        <div class="material">
+                            <div>材質：</div>
+                            <div>商品材質說明</div>
+                        </div>
+                        <div class="dashline"></div>
+                        <div class="addtobag"></div>
+                        <div class="wishlist"></div>
                     </div>
                 </div>
                 <div class="backbtn"></div>
             </div>
         </div>
-		<!--
 		<div>
 			<a href="#link">
 				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
@@ -708,7 +823,7 @@
 				<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
 			</a>
 		</div>
-		-->
+		--%>
 	</div>
 
 

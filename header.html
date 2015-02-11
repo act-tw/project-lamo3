@@ -19,9 +19,27 @@
 		    margin: 0 auto !important;
 		}
 
-        #container {
-        	padding-top: 148px;
+		#container
+	    {
+	        width: 100%;
+	        max-width: 1920px;
+	        min-width: 1024px;
+	        padding-top: 148px;
+	    }
+
+        #tbItemList {
+            width: 100%;
         }
+
+        #ctl00_ContentPlaceHolder1_tdLeft {
+            width: 318px;
+            padding: 0;
+        }
+
+        #ctl00_ContentPlaceHolder1_ilItems {
+            text-align: left;
+            position: relative;
+        }		
 
         .header
         {
@@ -435,8 +453,41 @@
 		    output.push(si[max - 1]);
 		    return output;
 		};
+		var isTest = false;
+		function initShoppingCart() {
+			var cartlist=[{MerNo: "S01450641015",MerNo1: "01450641015",MerName: "帽內撞呢料雙蓋袋風衣外套",Color: "杏色",Size: "S",Price: 1495,Num: 1,PhotoSmPath: "http://s3.hicloud.net.tw/fifty/men/0145064101539/0145064101539.jpg",ColorPhotoPath: "http://s3.hicloud.net.tw/fifty/men/0145064101539/color.jpg"}];
+            function getdata(cartlist) {
+				var count = 0;
+			    var sum = 0;
+			    var html = "";
+			    try {
+			        if (cartlist[0].MerName) {
+			            for (var i = 0; i < cartlist.length; i++) {
+							html += "<tr>"
+                            html += "<td>" + cartlist[i].MerName + "</td>"
+                            html += "<td><img src=\"" + cartlist[i].ColorPhotoPath + "\" width=\"11\" /></td>"
+                            html += "<td>" + cartlist[i].Size + "</td>"
+                            html += "<td>" + cartlist[i].Price + "</td>"
+                            html += "<td class=\"end\">" + cartlist[i].Num + "</td>"
+                            html += "</tr>"
+			                count += cartlist[i].Num;
+			                sum += cartlist[i].Num * cartlist[i].Price;
+			            }
+			        }
+			    } catch (err) {
+			    }
+			    $(".header>.box>.control>.right>.bagbox>div>.list>table>tbody").html(html);
+			    $(".count").text(count);                	
+            }
+            if (isTest) {
+            	getdata(cartlist);
+            } else {
+            	$.getJSON("../Common/CartList.ashx", function (cartlist) {
+			    	getdata(cartlist);
+				});                
+            }
+		}
         $(function () {
-        	var isTest = false;
         	(function () {
 				var data = [
 					{Idno: 5,Name: "newin",MouseoverName: "",PhotoPath: "http://photo.lamo3.com.tw/eshop/common/nav-new-in.png",MainPhoto: "",ShowType: 0,OrderNum: 1,V1: ""},
@@ -526,37 +577,7 @@
                         }, 500));
                     }
                 });
-                var cartlist=[{MerNo: "S01450641015",MerNo1: "01450641015",MerName: "帽內撞呢料雙蓋袋風衣外套",Color: "杏色",Size: "S",Price: 1495,Num: 1,PhotoSmPath: "http://s3.hicloud.net.tw/fifty/men/0145064101539/0145064101539.jpg",ColorPhotoPath: "http://s3.hicloud.net.tw/fifty/men/0145064101539/color.jpg"}];
-                function getdata(cartlist) {
-					var count = 0;
-			        var sum = 0;
-			        var html = "";
-			        try {
-			            if (cartlist[0].MerName) {
-			                for (var i = 0; i < cartlist.length; i++) {
-								html += "<tr>"
-                                html += "<td>" + cartlist[i].MerName + "</td>"
-                                html += "<td><img src=\"" + cartlist[i].ColorPhotoPath + "\" width=\"11\" /></td>"
-                                html += "<td>" + cartlist[i].Size + "</td>"
-                                html += "<td>" + cartlist[i].Price + "</td>"
-                                html += "<td class=\"end\">" + cartlist[i].Num + "</td>"
-                                html += "</tr>"
-			                    count += cartlist[i].Num;
-			                    sum += cartlist[i].Num * cartlist[i].Price;
-			                }
-			            }
-			        } catch (err) {
-			        }
-			        $(".header>.box>.control>.right>.bagbox>div>.list>table>tbody").html(html);
-			        $(".count").text(count);                	
-                }
-                if (isTest) {
-                	getdata(cartlist);
-                } else {
-                	$.getJSON("../Common/CartList.ashx", function (cartlist) {
-			        	getdata(cartlist);
-			    	});                
-                }
+                initShoppingCart();
             })(); //bag
             (function () {
                 $(".header>.box>.control>.right>.upnav>.customerservice").click(function () {
