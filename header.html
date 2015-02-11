@@ -39,6 +39,10 @@
         #ctl00_ContentPlaceHolder1_ilItems {
             text-align: left;
             position: relative;
+        }
+
+        .defIf {
+        	display: none;
         }		
 
         .header
@@ -510,7 +514,7 @@
 									html += data[i].V1;
 									break;
 							}
-							html += "\"><img src=\"" + data[i].PhotoPath + "\"></a>";
+							html += "\"" + (data[i].ShowType===3?" target=\"_blank\"":"") + "><img src=\"" + data[i].PhotoPath + "\"></a>";
 						}
 						$(".header>.box>.control>.left").html(html).on("mouseenter mouseleave","img",function() {
 							var $this = $(this);
