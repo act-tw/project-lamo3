@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+    	String.prototype.splitLast = function (separator) {
+		    var si = this.split(separator);
+		    var sb = "";
+		    var max = si.length;
+		    for (var i = 0; i < max; i++) {
+		        if (i < max - 1) {
+		            sb += si[i];
+		            if (i < max - 2) {
+		                sb += separator;
+		            }
+		        }
+		    }
+		    var output = [];
+		    if (sb != "") {
+		        output.push(sb);
+		    }
+		    output.push(si[max - 1]);
+		    return output;
+		};
+		function QueryString(name) {
+		    var AllVars = window.location.search.substring(1);
+		    var Vars = AllVars.split("&");
+		    for (i = 0; i < Vars.length; i++) {
+		        var Var = Vars[i].split("=");
+		        if (Var[0].toUpperCase() === name.toUpperCase()) return Var[1];
+		    }
+		    return "";
+		}
+    </script>
+</head>
+<body style="height: 2000px;">
+<link rel="stylesheet" type="text/css" href="itemlist.css">
+<script src="itemlist.js"></script>
+
+
+
+
+
+<div class="navibar">
+    <a href="../Shop"><span class="home">&nbsp;</span></a>
+    <%--
+		<a href="#path">測試位置</a>
+		<span class="flag">&nbsp;</span>
+		<a href="#path">測試位置</a>
+		<span class="flag">&nbsp;</span>
+		<a href="#path">測試位置</a>
+    --%>
+</div>
+<div class="sortbar">
+    <div class="flag">sort by</div>
+    <div class="sortbox">
+        <div>
+            <div class="group price">
+                <div class="no">價格</div>
+                <div>價格由高至低</div>
+                <div>價格由低至高</div>
+            </div>
+            <div class="group size">
+                <div class="no">尺寸 ( 可複選 )</div>
+            </div>
+        </div>
+        <div class="control">
+            <span class="clearbtn">清除</span>
+            <span class="spline">|</span>
+            <span class="confirmbtn">確認</span>
+        </div>
+    </div>
+    <div class="look">look</div>
+    <div class="item">item</div>
+</div>
+<div style="clear: both;">&nbsp;</div>
+<div class="pagerbox">
+    <div class="prev">&nbsp;</div>
+    <div class="countbox">&nbsp;</div>
+    <div class="next">&nbsp;</div>
+</div>
+<div class="waterfall">
+    <asp:Literal ID="litMain" runat="server"></asp:Literal>
+    <%--
+    <div>
+        <div class="front">
+            <a href="{0}">
+                <img src="http://www.life8-photo.com/women/pants/52171/b600.jpg"></a>
+            <div class="namepricebox">
+                <div class="namelabel">拉鍊口袋撞色合身修身超彈力貼腿褲-女</div>
+                <div class="pricelabel">
+                    <span class="original">NT. 1999</span><span>NT. 999</span>
+                </div>
+                <div class="infobtn"></div>
+            </div>
+            <div class="icon">
+                <img src="http://photo.lamo3.com.tw/eshop/product-detail/inspirations.png"/>
+            </div>
+        </div>
+        <div class="back">
+            <div>
+                <div class="namelabel">
+                    拉鍊口袋撞色合身修身超彈力貼腿褲-女
+                    <div class="pricelabel">NT. 999</div>
+                    <div class="dashline"></div>
+                    <div class="sizebox">
+                        <span>L</span>
+                        <a href="javascript:void(0);" k="1001">M</a>
+                        <a href="javascript:void(0);" k="1002">S</a>
+                    </div>
+                    <div class="colorbox">
+                        
+                    </div>
+                    <div class="material">
+                        <div>材質：</div>
+                        <div>商品材質說明</div>
+                    </div>
+                    <div class="dashline"></div>
+                    <div class="addtobag"></div>
+                    <div class="wishlist"></div>
+                </div>
+            </div>
+            <div class="backbtn"></div>
+        </div>
+    </div>
+	<div>
+		<a href="#link">
+			<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part001.jpg">
+		</a>
+	</div>
+	<div>
+		<a href="#link">
+			<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part002.jpg">
+		</a>
+	</div>
+	<div>
+		<a href="#link">
+			<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part003.jpg">
+		</a>
+	</div>
+	<div>
+		<a href="#link">
+			<img src="https://cdn.rawgit.com/tooto1985/project-lamo3/master/static/images/demo/part004.jpg">
+		</a>
+	</div>
+    --%>
+</div>
+
+
+
+
+
+</body>
+</html>

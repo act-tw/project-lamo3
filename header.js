@@ -17,7 +17,7 @@ String.prototype.splitLast = function (separator) {
     output.push(si[max - 1]);
     return output;
 };
-var isTest = false;
+var isLocal = /^file\:\/\/\//i.test(location.href);
 function initShoppingCart() {
     var cartlist = [{ MerNo: "S01450641015", MerNo1: "01450641015", MerName: "帽內撞呢料雙蓋袋風衣外套", Color: "杏色", Size: "S", Price: 1495, Num: 1, PhotoSmPath: "http://s3.hicloud.net.tw/fifty/men/0145064101539/0145064101539.jpg", ColorPhotoPath: "http://s3.hicloud.net.tw/fifty/men/0145064101539/color.jpg" }];
     function getdata(cartlist) {
@@ -43,7 +43,7 @@ function initShoppingCart() {
         $(".header>.box>.control>.right>.bagbox>div>.list>table>tbody").html(html);
         $(".count").text(count);
     }
-    if (isTest) {
+    if (isLocal) {
         getdata(cartlist);
     } else {
         $.getJSON("../Common/CartList.ashx", function (cartlist) {
@@ -98,7 +98,7 @@ $(function() {
             }
         }
 
-        if (isTest) {
+        if (isLocal) {
             getdata(data);
         } else {
             $.getJSON("../common/ajax/menucmd.ashx", function(data) {
@@ -156,7 +156,11 @@ $(function() {
         $(".header>.customerservicebox>div>.close").click(function() {
             $(".header>.customerservicebox").animate({ hide: "hide", height: 0 });
         });
-        $(".header>.customerservicebox>div>.outbox").load("../UserFiles/htmlCustomPage2.htm");
+        if (isLocal) {
+        	$(".header>.customerservicebox>div>.outbox").html("CUSTOMER SERVICE");
+        } else {
+        	$(".header>.customerservicebox>div>.outbox").load("../UserFiles/htmlCustomPage2.htm");	
+        }
     })(); //customerservice
     (function() {
         $(".header>.eventbox>div>.eventbutton").click(function() {
@@ -166,7 +170,12 @@ $(function() {
             } else {
                 $(".header>.eventbox").animate({ "right": -190 });
             }
-            $(".header>.eventbox>div>.eventcontent").load("../UserFiles/htmlCustomPage1.htm");
+            if (isLocal) {
+            	$(".header>.eventbox>div>.eventcontent").html("EVENT");
+            } else {
+            	$(".header>.eventbox>div>.eventcontent").load("../UserFiles/htmlCustomPage1.htm");
+            }
+            
         });
     })(); //event
     (function() {
