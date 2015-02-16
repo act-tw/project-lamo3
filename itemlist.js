@@ -104,7 +104,7 @@ $(function() {
     })(); //core
     (function() {
         var $waterfall = $(".waterfall");
-        $waterfall.on("mouseenter mouseleave", ">div a>img", function () {
+        $waterfall.on("mouseenter mouseleave", ">div a>img", function() {
             var $this = $(this);
             var src = $this.attr("src");
             var srcSplitLast;
@@ -284,10 +284,10 @@ $(function() {
             $(".pagerbox").css("left", rowCount * itemWidth + 18);
         }); //adjust pager position
         (function() {
-        	if (isLocal) {
-        		window.allCount = 420;
-        		window.pagerSize = 60;
-        	}
+            if (isLocal) {
+                window.allCount = 420;
+                window.pagerSize = 60;
+            }
             var max = Math.ceil(allCount / pagerSize);
             var cur = QueryString("smfp");
             if (cur === "") {
@@ -355,72 +355,80 @@ $(function() {
         })(); //build pager count
     })(); //pager
     (function() {
-    	var data = [
-	        { Idno: 5, Name: "newin", MouseoverName: "", PhotoPath: "http://photo.lamo3.com.tw/eshop/common/nav-new-in.png", MainPhoto: "", ShowType: 0, OrderNum: 1, V1: "" },
-	        { Idno: 6, Name: "beautifulthings", MouseoverName: "", PhotoPath: "http://photo.lamo3.com.tw/eshop/common/nav-beautiful-things.png", MainPhoto: "", ShowType: 0, OrderNum: 1, V1: "" },
-	        { Idno: 7, Name: "lookbook", MouseoverName: "", PhotoPath: "http://photo.lamo3.com.tw/eshop/common/nav-lookbook.png", MainPhoto: "", ShowType: 0, OrderNum: 1, V1: "" },
-	        { Idno: 8, Name: "onsale", MouseoverName: "", PhotoPath: "http://photo.lamo3.com.tw/eshop/common/nav-on-sale.png", MainPhoto: "", ShowType: 0, OrderNum: 1, V1: "" },
-	        { Idno: 9, Name: "event", MouseoverName: "", PhotoPath: "http://photo.lamo3.com.tw/eshop/common/nav-event.png", MainPhoto: "", ShowType: 2, OrderNum: 1, V1: "http://www.google.com.tw/" }
-	    ];
+        var data = [
+            { Idno: 5, Name: "newin", MouseoverName: "", PhotoPath: "http://photo.lamo3.com.tw/eshop/common/nav-new-in.png", MainPhoto: "", ShowType: 0, OrderNum: 1, V1: "" },
+            { Idno: 6, Name: "beautifulthings", MouseoverName: "", PhotoPath: "http://photo.lamo3.com.tw/eshop/common/nav-beautiful-things.png", MainPhoto: "", ShowType: 0, OrderNum: 1, V1: "" },
+            { Idno: 7, Name: "lookbook", MouseoverName: "", PhotoPath: "http://photo.lamo3.com.tw/eshop/common/nav-lookbook.png", MainPhoto: "", ShowType: 0, OrderNum: 1, V1: "" },
+            { Idno: 8, Name: "onsale", MouseoverName: "", PhotoPath: "http://photo.lamo3.com.tw/eshop/common/nav-on-sale.png", MainPhoto: "", ShowType: 0, OrderNum: 1, V1: "" },
+            { Idno: 9, Name: "event", MouseoverName: "", PhotoPath: "http://photo.lamo3.com.tw/eshop/common/nav-event.png", MainPhoto: "", ShowType: 2, OrderNum: 1, V1: "http://www.google.com.tw/" }
+        ];
         if (QueryString("pat") === "1") {
-            $(".sortbar").hide();
-            function getdata(data) {
-				var html = "";
-                for (var i = 0, max = data.length; i < max; i++) {
-                    if (data[i].Idno === parseInt(QueryString("m"), 10)) {
-                        html += "<a href=\"" + gotourl({ pat: "" }, true) + "\">" + data[i].Name + "</a>";
-                        html += "<span class=\"flag\">&nbsp;</span>";
-                        html += "<a href=\"" + gotourl({ idno: "" }, true) + "\">穿搭頁</a>";
-                        break;
+            (function() {
+                $(".sortbar").hide();
+
+                function getdata(data) {
+                    var html = "";
+                    for (var i = 0, max = data.length; i < max; i++) {
+                        if (data[i].Idno === parseInt(QueryString("m"), 10)) {
+                            html += "<a href=\"" + gotourl({ pat: "" }, true) + "\">" + data[i].Name + "</a>";
+                            html += "<span class=\"flag\">&nbsp;</span>";
+                            html += "<a href=\"" + gotourl({ idno: "" }, true) + "\">穿搭頁</a>";
+                            break;
+                        }
                     }
+                    if (window["patIdno"] && window["patName"]) {
+                        html += "<span class=\"flag\">&nbsp;</span>";
+                        html += "<a href=\"" + gotourl({ idno: patIdno }, true) + "\">" + patName + "</a>";
+                    }
+                    $(".navibar").append(html);
                 }
-                if (window["patIdno"] && window["patName"]) {
-                    html += "<span class=\"flag\">&nbsp;</span>";
-                    html += "<a href=\"" + gotourl({ idno: patIdno }, true) + "\">" + patName + "</a>";
+
+                if (isLocal) {
+                    getdata(data);
+                } else {
+                    $.getJSON("../common/ajax/menucmd.ashx", function(data) {
+                        getdata(data);
+                    });
                 }
-                $(".navibar").append(html);
-            }
-            if (isLocal) {
-            	getdata(data);
-            } else {
-	            $.getJSON("../common/ajax/menucmd.ashx", function(data) {
-	                getdata(data);
-	            });            	
-            }
+            })();
         } else {
-            var m = parseInt(QueryString("m"), 10);
-            var p = parseInt(QueryString("p"), 10);
-            function getdata(data) {
-                var html = "";
-                for (var i = 0, imax = data.length; i < imax; i++) {
-                    if (data[i].Idno === m) {
-                        html += "<a href=\"" + gotourl({ m: data[i].Idno, p: "" }, true) + "\">" + data[i].Name + "</a>";
-                        for (var j = 0, jmax = data[i].SubClass.length; j < jmax; j++) {
-                            if (data[i].SubClass[j].Idno === p) {
-                                html += "<span class=\"flag\">&nbsp;</span>";
-                                html += "<a href=\"" + gotourl({ m: data[i].Idno, p: data[i].SubClass[j].Idno }, true) + "\">" + data[i].SubClass[j].Name + "</a>";
-                            } else {
-                                for (var k = 0, kmax = data[i].SubClass[j].List.length; k < kmax; k++) {
-                                    if (data[i].SubClass[j].List[k].Idno === p) {
-                                        html += "<span class=\"flag\">&nbsp;</span>";
-                                        html += "<a href=\"" + gotourl({ m: data[i].Idno, p: data[i].SubClass[j].Idno }, true) + "\">" + data[i].SubClass[j].Name + "</a>";
-                                        html += "<span class=\"flag\">&nbsp;</span>";
-                                        html += "<a href=\"" + gotourl({ m: data[i].Idno, p: data[i].SubClass[j].List[k].Idno }, true) + "\">" + data[i].SubClass[j].List[k].Name + "</a>";
+            (function() {
+                var m = parseInt(QueryString("m"), 10);
+                var p = parseInt(QueryString("p"), 10);
+
+                function getdata(data) {
+                    var html = "";
+                    for (var i = 0, imax = data.length; i < imax; i++) {
+                        if (data[i].Idno === m) {
+                            html += "<a href=\"" + gotourl({ m: data[i].Idno, p: "" }, true) + "\">" + data[i].Name + "</a>";
+                            for (var j = 0, jmax = data[i].SubClass.length; j < jmax; j++) {
+                                if (data[i].SubClass[j].Idno === p) {
+                                    html += "<span class=\"flag\">&nbsp;</span>";
+                                    html += "<a href=\"" + gotourl({ m: data[i].Idno, p: data[i].SubClass[j].Idno }, true) + "\">" + data[i].SubClass[j].Name + "</a>";
+                                } else {
+                                    for (var k = 0, kmax = data[i].SubClass[j].List.length; k < kmax; k++) {
+                                        if (data[i].SubClass[j].List[k].Idno === p) {
+                                            html += "<span class=\"flag\">&nbsp;</span>";
+                                            html += "<a href=\"" + gotourl({ m: data[i].Idno, p: data[i].SubClass[j].Idno }, true) + "\">" + data[i].SubClass[j].Name + "</a>";
+                                            html += "<span class=\"flag\">&nbsp;</span>";
+                                            html += "<a href=\"" + gotourl({ m: data[i].Idno, p: data[i].SubClass[j].List[k].Idno }, true) + "\">" + data[i].SubClass[j].List[k].Name + "</a>";
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                    $(".navibar").append(html);
                 }
-                $(".navibar").append(html);            	
-            }
-            if (isLocal) {
-            	getdata(data);
-            } else {
-	            $.getJSON("../common/ajax/menucmd.ashx", function(data) {
-	            	getdata(data);
-	            });            	
-            }
+
+                if (isLocal) {
+                    getdata(data);
+                } else {
+                    $.getJSON("../common/ajax/menucmd.ashx", function(data) {
+                        getdata(data);
+                    });
+                }
+            })();
         }
     })(); //navi
     (function() {
@@ -573,7 +581,7 @@ $(function() {
             }
         });
     })(); //wishlist
-    (function () {
+    (function() {
         var search = QueryString("ctl00%24edtSearch") || QueryString("ctl00$edtSearch");
         if (search !== "") {
             $(".navibar").hide();
