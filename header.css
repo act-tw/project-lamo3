@@ -118,6 +118,16 @@ body
                             background-image: url(http://photo.lamo3.com.tw/eshop/common/customer-service-hover.png);
                         }
 
+                    .header > .box > .control > .logolonk 
+                    {
+                        display: block;
+                        width: 102px;
+                        height: 110px;
+                        position: absolute;
+                        left: 41px;
+                        top: 10px;
+                    }
+
                 .header > .box > .control > .right > .nav
                 {
                     margin-top: 13px;
