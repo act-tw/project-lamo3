@@ -83,7 +83,8 @@ $(function() {
             return ary.indexOf(Math.min.apply(null, ary));
         }
 
-        $(window).resize(function() {
+        function resize() {
+            $("#itemRigthDiv").css("display", "block");
             var itemWidth = $items.eq(0).outerWidth(true);
             var rowCount = parseInt($waterfall.width() / itemWidth, 10);
             var rowHeight = [];
@@ -97,10 +98,20 @@ $(function() {
                 rowHeight[minIndex] += $items.eq(i).outerHeight(true);
             }
             $waterfall.height(Math.max.apply(null, rowHeight));
+            $("#itemRigthDiv").css("display", "inline-block");
+        }
+
+        $(window).resize(function() {
+            resize();
         }).resize();
         $(window).load(function() {
-            $(window).resize();
+            resize();
         });
+        for (var i = 1; i < 4; i++) {
+            setTimeout(function () {
+                resize();
+            }, i * 500);
+        }
     })(); //core
     (function() {
         var $waterfall = $(".waterfall");
@@ -588,6 +599,19 @@ $(function() {
             $(".sortbar>.flag").hide();
             $(".sortbar").css("margin-top", 22);
             $("#ctl00_ContentPlaceHolder1_ilItems").css({ "max-width": 1232, "min-width": 924 });
+            var output = "<div style=\"margin:10px 0;\">";
+            output = "你搜尋的關鍵字是\"" + search + "\"";
+            if (window["allCount"] !== undefined && window["allCount"] === 0) {
+                $(".sortbar").hide();
+                output += "，找不到相關的商品";
+            }
+            output += "。</div>";
+            $(".waterfall").before(output);
         }
-    })(); // search
+    })(); //search
+    (function () {
+        if (QueryString("pat") !== "" && QueryString("idno") === "") {
+            $(".waterfall").addClass("itemparts");
+        }
+    })(); //itemparts
 });

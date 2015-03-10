@@ -1,7 +1,11 @@
+* {
+  font-family: "LanTinghei tc",·L³n¥¿¶ÂÅé, "Helvetica Neue",Helvetica,sans-serif;
+}
+
 body
 {
     width: 100%;
-    min-width: 1024px;
+    min-width: 1366px;
     max-width: 1920px;
     margin: 0 auto !important;
 }
@@ -21,7 +25,8 @@ body
 
 #ctl00_ContentPlaceHolder1_tdLeft
 {
-    width: 318px;
+    min-width: 197px;
+    width: 197px;
     padding: 0;
 }
 
@@ -33,7 +38,7 @@ body
 
 .defIf
 {
-    display: none;
+    /*display: none;*/
 }
 
 /**********/
@@ -43,6 +48,7 @@ body
     position: fixed;
     width: 100%;
     z-index: 99;
+    min-width: 1366px;
 }
 
     .header a
@@ -61,7 +67,7 @@ body
     {
         height: 148px;
         max-width: 1920px;
-        min-width: 1024px;
+        min-width: 1100px;
     }
 
         .header > .box > .control
@@ -289,6 +295,7 @@ body
             height: 8px;
             width: 100%;
             background-image: url(http://photo.lamo3.com.tw/eshop/common/shadow.png);
+            background-repeat: no-repeat;
         }
 
     .header > .searchbox
@@ -375,33 +382,43 @@ body
                 height: 430px;
             }
 
-    .header > .eventbox
+.eventoutbox
+{
+    height: 685px;
+    overflow: hidden;
+    width: 55px;
+    position: fixed;
+    right: 0;
+    top: 148px;
+    z-index: -1;
+}
+
+    .eventoutbox > .eventbox
     {
-        width: 223px;
+        width: 243px;
         height: 685px;
         background-image: url(http://photo.lamo3.com.tw/eshop/common/promo-bg.png);
-        position: fixed;
-        top: 50%;
-        margin-top: -343px;
-        right: -190px;
+        float: left;
+        background-repeat: no-repeat;
+        background-position: 20px 0;
     }
 
-        .header > .eventbox > div > .eventbutton
+        .eventoutbox > .eventbox > div > .eventbutton
         {
             width: 62px;
             height: 172px;
             background-image: url(http://photo.lamo3.com.tw/eshop/common/promo-button.png);
-            margin-left: -23px;
+            margin-left: -3px;
             margin-top: 257px;
             cursor: pointer;
         }
 
-        .header > .eventbox > div > .eventcontent
+        .eventoutbox > .eventbox > div > .eventcontent
         {
             width: 160px;
             height: 590px;
             margin-top: -378px;
-            margin-left: 49px;
+            margin-left: 69px;
         }
 
 .top
@@ -412,7 +429,9 @@ body
     max-width: 1920px;
     min-width: 1024px;
     z-index: 10;
-    height: 0px;
+    height: 0;
+    display: none;
+    right: 43px;
 }
 
     .top > .baloon

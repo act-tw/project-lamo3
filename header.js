@@ -159,24 +159,48 @@ $(function() {
         if (isLocal) {
         	$(".header>.customerservicebox>div>.outbox").html("CUSTOMER SERVICE");
         } else {
-        	$(".header>.customerservicebox>div>.outbox").load("../UserFiles/htmlCustomPage2.htm");	
+            $(".header>.customerservicebox>div>.outbox").html("<iframe src=\"../UserFiles/htmlCustomPage2.htm\" scrolling=\"no\" width=\"100%\" height=\"100%\" frameborder=\"0\" allowTransparency=\"true\"></iframe>");
         }
     })(); //customerservice
-    (function() {
-        $(".header>.eventbox>div>.eventbutton").click(function() {
-            var right = parseInt($(".header>.eventbox").css("right"));
-            if (right === -190) {
-                $(".header>.eventbox").animate({ "right": 0 });
+    (function () {
+        $(".header").append("<div class=\"eventoutbox\"></div>");
+        $(".header>.eventbox").appendTo($(".eventoutbox"));
+        if (isLocal) {
+            $(".header>.eventoutbox>.eventbox>div>.eventcontent").html("EVENT");
+        } else {
+            $(".header>.eventoutbox>.eventbox>div>.eventcontent").html("<iframe src=\"../UserFiles/htmlCustomPage1.htm\" scrolling=\"no\" width=\"100%\" height=\"100%\" frameborder=\"0\" allowTransparency=\"true\"></iframe>");
+        }
+        $(".header>.eventoutbox>.eventbox>div>.eventbutton").click(function () {
+            if ($(".header>.eventoutbox").width() === 243) {
+                $(".header>.eventoutbox").animate({ "width": 55 });
+                $(".top").animate({ "right": 43 });
             } else {
-                $(".header>.eventbox").animate({ "right": -190 });
+                $(".header>.eventoutbox").animate({ "width": 243 });
+                $(".top").animate({ "right": 231 });
             }
-            if (isLocal) {
-            	$(".header>.eventbox>div>.eventcontent").html("EVENT");
-            } else {
-            	$(".header>.eventbox>div>.eventcontent").load("../UserFiles/htmlCustomPage1.htm");
-            }
-            
         });
+        $(window).resize(function() {
+            var useHeight = $(window).height() - $(".header").height();
+            if (useHeight >= 685) {
+                $(".eventoutbox").css("top", ((useHeight - 685) / 2) + 148);
+            } else {
+                $(".eventoutbox").css("top", 148);
+            }
+        }).resize();
+        $(document).scroll(function () {
+            var useHeight = $(window).height() - $(".header").height();
+            if (useHeight >= 685) {
+                $(".eventoutbox").css("top", ((useHeight - 685) / 2) + 148);
+            } else {
+                if ($(document).scrollTop() <= 685 - useHeight) {
+                    $(".eventoutbox").css("top", 148 - $(document).scrollTop());
+                } else if ($(document).scrollTop()> $(document).height()-$(window).height()-40) {
+                    $(".eventoutbox").css("top", 148 - (685 - useHeight) - ($(document).scrollTop() - ($(document).height() - $(window).height() - 40)));
+                } else {
+                    $(".eventoutbox").css("top", 148 - (685 - useHeight));
+                }
+            }
+        }).scroll();
     })(); //event
     (function() {
 

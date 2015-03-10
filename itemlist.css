@@ -1,4 +1,9 @@
-﻿.waterfall
+﻿#itemRigthDiv {
+    margin: 0 10px;
+    display: inline-block;
+}
+
+.waterfall
 {
     max-width: 1232px;
     min-width: 924px;
@@ -10,9 +15,19 @@
     {
         width: 290px;
         float: left;
-        margin-right: 18px;
-        margin-bottom: 20px;
+        margin-right: 12px;
+        margin-bottom: 12px;
         position: relative;
+    }
+
+    .waterfall.itemparts > div
+    {
+        -moz-box-shadow: 5px 5px 5px #c0c0c0;
+        -webkit-box-shadow: 5px 5px 5px #c0c0c0;
+        box-shadow: 5px 5px 5px #c0c0c0;
+        -moz-border-radius: 6px;
+        -webkit-border-radius: 6px;
+        border-radius: 6px;
     }
 
         .waterfall > div > a
@@ -39,15 +54,18 @@
             border-radius: 6px;
             float: left;
             padding: 4px;
+            -moz-box-shadow: 5px 5px 5px #c0c0c0;
+            -webkit-box-shadow: 5px 5px 5px #c0c0c0;
+            box-shadow: 5px 5px 5px #c0c0c0;
         }
 
             .waterfall > div > .front.rotate
             {
-                -moz-transform: rotateY(90deg);
-                -ms-transform: rotateY(90deg);
-                -o-transform: rotateY(90deg);
-                -webkit-transform: rotateY(90deg);
-                transform: rotateY(90deg);
+                -moz-transform: rotateY(90deg) skewY(15deg);
+                -ms-transform: rotateY(90deg) skewY(15deg);
+                -o-transform: rotateY(90deg) skewY(15deg);
+                -webkit-transform: rotateY(90deg) skewY(15deg);
+                transform: rotateY(90deg) skewY(15deg);
             }
 
             .waterfall > div > .front > a > img
@@ -99,12 +117,18 @@
                     right: 0;
                 }
 
-            .waterfall > div > .front > .icon
+            .waterfall > div > div > .icon
             {
                 position: absolute;
-                top: 4px;
-                right: 4px;
+                top: 0;
+                right: 0;
+                height: auto !important;
             }
+
+                .waterfall > div > div > .icon > img
+                {
+                    width: 55px;
+                }
 
         .waterfall > div > .back
         {
@@ -112,11 +136,11 @@
             width: 280px;
             height: 100%;
             top: 0;
-            -moz-transform: rotateY(-90deg);
-            -ms-transform: rotateY(-90deg);
-            -o-transform: rotateY(-90deg);
-            -webkit-transform: rotateY(-90deg);
-            transform: rotateY(-90deg);
+            -moz-transform: rotateY(-90deg) skewY(-15deg);
+            -ms-transform: rotateY(-90deg) skewY(-15deg);
+            -o-transform: rotateY(-90deg) skewY(-15deg);
+            -webkit-transform: rotateY(-90deg) skewY(-15deg);
+            transform: rotateY(-90deg) skewY(-15deg);
             -moz-transition: all .4s linear;
             -o-transition: all .4s linear;
             -webkit-transition: all .4s linear;
@@ -127,6 +151,9 @@
             border-radius: 6px;
             float: left;
             padding: 0 4px;
+            -moz-box-shadow: 5px 5px 5px #c0c0c0;
+            -webkit-box-shadow: 5px 5px 5px #c0c0c0;
+            box-shadow: 5px 5px 5px #c0c0c0;
         }
 
             .waterfall > div > .back.rotate
@@ -301,6 +328,7 @@
         height: 10px;
         display: inline-block;
         margin: 0 5px;
+        background-repeat: no-repeat;
     }
 
     .navibar > a
@@ -384,6 +412,7 @@
             {
                 font-weight: bold;
                 cursor: default;
+                white-space: nowrap;
             }
 
             .sortbar > .sortbox > div > .group.price > .selected
