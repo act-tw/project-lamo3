@@ -157,12 +157,12 @@ $(function() {
             $(".header>.customerservicebox").animate({ hide: "hide", height: 0 });
         });
         if (isLocal) {
-        	$(".header>.customerservicebox>div>.outbox").html("CUSTOMER SERVICE");
+            $(".header>.customerservicebox>div>.outbox").html("CUSTOMER SERVICE");
         } else {
             $(".header>.customerservicebox>div>.outbox").html("<iframe src=\"../UserFiles/htmlCustomPage2.htm\" scrolling=\"no\" width=\"100%\" height=\"100%\" frameborder=\"0\" allowTransparency=\"true\"></iframe>");
         }
     })(); //customerservice
-    (function () {
+    (function() {
         $(".header").append("<div class=\"eventoutbox\"></div>");
         $(".header>.eventbox").appendTo($(".eventoutbox"));
         if (isLocal) {
@@ -170,13 +170,19 @@ $(function() {
         } else {
             $(".header>.eventoutbox>.eventbox>div>.eventcontent").html("<iframe src=\"../UserFiles/htmlCustomPage1.htm\" scrolling=\"no\" width=\"100%\" height=\"100%\" frameborder=\"0\" allowTransparency=\"true\"></iframe>");
         }
-        $(".header>.eventoutbox>.eventbox>div>.eventbutton").click(function () {
+        $(".header>.eventoutbox>.eventbox>div>.eventbutton").click(function() {
             if ($(".header>.eventoutbox").width() === 243) {
                 $(".header>.eventoutbox").animate({ "width": 55 });
                 $(".top").animate({ "right": 43 });
             } else {
                 $(".header>.eventoutbox").animate({ "width": 243 });
                 $(".top").animate({ "right": 231 });
+            }
+        });
+        $(".header>.eventoutbox").mouseleave(function () {
+            if ($(".header>.eventoutbox").width() === 243) {
+                $(".header>.eventoutbox").animate({ "width": 55 });
+                $(".top").animate({ "right": 43 });
             }
         });
         $(window).resize(function() {
@@ -187,17 +193,50 @@ $(function() {
                 $(".eventoutbox").css("top", 148);
             }
         }).resize();
-        $(document).scroll(function () {
+        var point1 = 0;
+        var point2 = 0;
+        var direction = true;
+        $(document).scroll(function() {
+            point1 = point2;
+            point2 = $(document).scrollTop();
+            direction = point2 >= point1;
             var useHeight = $(window).height() - $(".header").height();
             if (useHeight >= 685) {
                 $(".eventoutbox").css("top", ((useHeight - 685) / 2) + 148);
             } else {
                 if ($(document).scrollTop() <= 685 - useHeight) {
-                    $(".eventoutbox").css("top", 148 - $(document).scrollTop());
-                } else if ($(document).scrollTop()> $(document).height()-$(window).height()-40) {
+                    if (direction) {
+                        $(".eventoutbox").css("top", 148 - $(document).scrollTop());
+                    }
+                } else if ($(document).scrollTop() > $(document).height() - $(window).height() - 40) {
                     $(".eventoutbox").css("top", 148 - (685 - useHeight) - ($(document).scrollTop() - ($(document).height() - $(window).height() - 40)));
                 } else {
-                    $(".eventoutbox").css("top", 148 - (685 - useHeight));
+                    if (direction) {
+                        var n = 148 - (685 - useHeight);
+                        //----
+                        var a = parseInt($(".eventoutbox").css("top"), 10);
+                        a -= point2 - point1;
+                        if (a < n) {
+                            a = n;
+                        }
+                        //----
+                        $(".eventoutbox").css("top", a);
+                    } else {
+                        var height = Math.abs($(document).scrollTop() - (($(document).height() - $(window).height()) - 40));
+                        var n = 148 - (685 - useHeight) + height;
+                        if (n > 148) {
+                            n = 148;
+                        }
+                        //----
+                        var a = parseInt($(".eventoutbox").css("top"), 10);
+                        a -= point2 - point1;
+                        if (a > n) {
+                            a = n;
+                        }
+                        //----
+                        $(".eventoutbox").css("top", a);
+                    }
+
                 }
             }
         }).scroll();
